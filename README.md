@@ -6,6 +6,8 @@
 
 Animate with just HTML. Powered by data attributes. Add scroll, load, click, and hover animations to any HTML element without writing a single line of JavaScript.
 
+**[Documentation](https://ryo-manba.github.io/data-anim/)** | **[Playground](https://ryo-manba.github.io/data-anim/playground/)**
+
 ## Quick Start
 
 ```html
