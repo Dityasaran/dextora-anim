@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# copied from workspace at build time
+public/data-anim.js
 # generated types
 .astro/
 
