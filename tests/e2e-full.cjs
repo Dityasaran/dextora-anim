@@ -408,7 +408,9 @@ function assert(name, condition, detail) {
   assert('Docs: Playground button exists', docsButtons.secondaryText.includes('Playground'));
 
   // Docs index: showcase cards exist
-  const showcaseCards = await page.evaluate(() => document.querySelectorAll('.showcase-card').length);
+  const showcaseCards = await page.evaluate(
+    () => document.querySelectorAll('.showcase-card').length,
+  );
   assert('Docs: Animation showcase cards exist', showcaseCards >= 5, `got ${showcaseCards}`);
 
   // Docs index: showcase hover triggers animation
@@ -424,7 +426,9 @@ function assert(name, condition, detail) {
   }
 
   // Animations page: explorer exists and Play works
-  await page.goto('http://localhost:3333/docs/dist/docs/animations/', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:3333/docs/dist/docs/animations/', {
+    waitUntil: 'networkidle0',
+  });
   await new Promise((r) => setTimeout(r, 500));
   const animExplorer = await page.evaluate(() => {
     const target = document.getElementById('anim-target');
@@ -434,7 +438,11 @@ function assert(name, condition, detail) {
   });
   assert('Docs: Animation explorer target exists', animExplorer.hasTarget);
   assert('Docs: Animation explorer sidebar exists', animExplorer.hasSidebar);
-  assert('Docs: Animation explorer has 30 buttons', animExplorer.btnCount === 30, `got ${animExplorer.btnCount}`);
+  assert(
+    'Docs: Animation explorer has 30 buttons',
+    animExplorer.btnCount === 30,
+    `got ${animExplorer.btnCount}`,
+  );
 
   // Click a button and check animation plays
   const bounceBtn = await page.$('.anim-btn[data-play="bounceIn"]');
@@ -446,7 +454,9 @@ function assert(name, condition, detail) {
       return el?.style.animation?.includes('da-bounceIn') || false;
     });
     assert('Docs: Click bounceIn plays animation', animPlaying);
-    const labelText = await page.evaluate(() => document.getElementById('anim-current-name')?.textContent);
+    const labelText = await page.evaluate(
+      () => document.getElementById('anim-current-name')?.textContent,
+    );
     assert('Docs: Label updates to bounceIn', labelText === 'bounceIn', `got "${labelText}"`);
   }
 
@@ -471,7 +481,9 @@ function assert(name, condition, detail) {
   assert('Docs: Code indentation preserved', codeIndent);
 
   // Getting-started: AnimationDemo Play button works
-  await page.goto('http://localhost:3333/docs/dist/docs/getting-started/', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:3333/docs/dist/docs/getting-started/', {
+    waitUntil: 'networkidle0',
+  });
   await new Promise((r) => setTimeout(r, 500));
   const playBtn = await page.$('.demo-play-btn');
   assert('Docs: Getting-started has Play button', !!playBtn);
@@ -487,7 +499,9 @@ function assert(name, condition, detail) {
   }
 
   // Responsive page loads and has content
-  await page.goto('http://localhost:3333/docs/dist/docs/responsive/', { waitUntil: 'domcontentloaded' });
+  await page.goto('http://localhost:3333/docs/dist/docs/responsive/', {
+    waitUntil: 'domcontentloaded',
+  });
   const responsiveContent = await page.evaluate(() => {
     return document.body.textContent?.includes('data-anim-disable') || false;
   });
