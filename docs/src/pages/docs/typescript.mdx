@@ -1,0 +1,38 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: TypeScript
+description: Get full autocomplete for data-anim attributes in React and Vue.
+---
+
+import CodeBlock from '../../components/CodeBlock.astro';
+
+# TypeScript
+
+data-anim ships with built-in type definitions. Import once and get autocomplete for all `data-anim-*` attributes — no extra config needed.
+
+## Setup
+
+<CodeBlock
+  code={'import \'data-anim\';'}
+  lang="ts"
+/>
+
+That's it. This single import registers type augmentations for **React (JSX/TSX)** and **Vue** templates.n
+
+## What You Get
+
+All `data-anim-*` attributes are fully typed with autocomplete:
+
+<CodeBlock
+  code={'// React / TSX\n<div\n  data-anim="fadeInUp"             // 30+ animation names\n  data-anim-trigger="scroll"       // scroll, load, click, hover\n  data-anim-easing="spring"        // ease, ease-out-expo, ease-out-back, spring\n  data-anim-stagger-from="center"  // start, end, center, edges\n  data-anim-duration="800"\n  data-anim-delay="200"\n  data-anim-once\n/>'}
+  lang="tsx"
+/>
+
+## Exported Types
+
+You can import types directly for custom use cases:
+
+<CodeBlock
+  code={'import type {\n  DataAnimName,         // "fadeIn" | "fadeInUp" | "bounce" | ...\n  DataAnimTrigger,      // "scroll" | "load" | "click" | "hover"\n  DataAnimEasing,       // "ease" | "ease-out-expo" | "ease-out-back" | "spring"\n  DataAnimStaggerFrom,  // "start" | "end" | "center" | "edges"\n  DataAnimDisable,      // "mobile" | "tablet" | "desktop"\n  DataAnimAttributes,   // All data-anim-* attributes as an interface\n} from \'data-anim\';'}
+  lang="ts"
+/>
