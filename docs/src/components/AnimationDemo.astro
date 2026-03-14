@@ -8,41 +8,69 @@ const { name, trigger } = Astro.props;
 const id = `demo-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<div class="glass-card p-4 mb-4">
-  <div class="flex items-center justify-between mb-3">
-    <code class="text-xs font-mono text-accent">{name}</code>
-    {trigger && <span class="text-xs text-text-muted">trigger: {trigger}</span>}
-    <button
-      class="demo-play-btn text-xs px-3 py-1 rounded border border-border text-text-secondary hover:text-text hover:border-accent hover:bg-accent/10 transition-colors"
-      data-target={id}
-      data-anim-name={name}
-    >
-      Play
-    </button>
-  </div>
-  <div class="flex items-center justify-center h-24 rounded-lg bg-bg-surface border border-border overflow-hidden">
-    <div
-      id={id}
-      class="w-16 h-16 rounded-lg"
-      style="background: linear-gradient(135deg, #4f46e5, #7c3aed);"
-    >
+<div class="demo-card" data-demo-id={id} data-demo-anim={name}>
+  <code class="demo-label">{name}</code>
+  <div class="demo-stage">
+    <div id={id} class="demo-box">
+      <span class="demo-click-hint">Click to play</span>
     </div>
   </div>
 </div>
 
-<script>
-  document.querySelectorAll('.demo-play-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-target');
-      const animName = btn.getAttribute('data-anim-name');
-      const el = document.getElementById(targetId!);
-      if (el && animName) {
-        el.style.animation = 'none';
+<style>
+  .demo-card {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  .demo-label {
+    display: block;
+    padding: 8px 14px;
+    font-family: var(--font-mono) !important;
+    font-size: 14px !important;
+    color: var(--color-accent-readable) !important;
+    background: var(--color-bg-surface) !important;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .demo-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    overflow: hidden;
+  }
+  .demo-box {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .demo-click-hint {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    font-family: var(--font-mono);
+  }
+</style>
+
+<script is:inline>
+  document.querySelectorAll('.demo-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var id = card.getAttribute('data-demo-id');
+      var name = card.getAttribute('data-demo-anim');
+      var el = document.getElementById(id);
+      if (el && name) {
+        el.style.transition = 'none';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
         el.offsetWidth;
-        el.style.animation = `da-${animName} 1s ease both`;
-        el.addEventListener('animationend', () => {
-          el.style.animation = '';
-        }, { once: true });
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
       }
     });
   });

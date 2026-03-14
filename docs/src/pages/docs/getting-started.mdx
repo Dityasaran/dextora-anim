@@ -9,75 +9,53 @@ import AnimationDemo from '../../components/AnimationDemo.astro';
 
 # Getting Started
 
-Add smooth, performant animations to your website with just HTML attributes. No JavaScript to write. data-anim uses pure CSS animations with built-in anti-FOUC protection.
-
 ## Installation
 
 ### CDN
 
-Add a single script tag to your HTML. That's it.
-
 <CodeBlock
   code={`<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>`}
   lang="html"
-  filename="index.html"
 />
 
 ### npm
 
 <CodeBlock code={`npm install data-anim`} lang="bash" />
 
-Then import in your entry file:
+<CodeBlock code={`import 'data-anim';`} lang="js" />
 
-<CodeBlock code={`import 'data-anim';`} lang="js" filename="main.js" />
-
-## Your First Animation
-
-It takes just one attribute to animate an element:
+## Basic Usage
 
 <CodeBlock
   code={'<div data-anim="fadeInUp">\n  Hello, animated world!\n</div>'}
   lang="html"
-  filename="index.html"
 />
 
 <AnimationDemo name="fadeInUp" />
 
-## Adding a Trigger
+See [Animations](/docs/animations) for all 30+ built-in animations.
 
-By default, animations play when the element enters the viewport. You can change this:
+## Triggers
+
+By default, animations play on scroll. See [Triggers](/docs/triggers) for all options.
 
 <CodeBlock
-  code={'<!-- Animate on hover -->\n<div data-anim="pulse" data-anim-trigger="hover">\n  Hover me\n</div>\n\n<!-- Animate on click -->\n<button data-anim="bounce" data-anim-trigger="click">\n  Click me\n</button>'}
+  code={'<!-- Hover -->\n<div data-anim="pulse" data-anim-trigger="hover">\n  Hover me\n</div>\n\n<!-- Click -->\n<button data-anim="bounce" data-anim-trigger="click">\n  Click me\n</button>'}
   lang="html"
 />
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <AnimationDemo name="pulse" trigger="hover" />
-  <AnimationDemo name="bounce" trigger="click" />
-</div>
-
-## Customizing Animations
-
-Control duration, delay, and easing:
+## Customization
 
 <CodeBlock
-  code={'<div\n  data-anim="slideInLeft"\n  data-anim-duration="800ms"\n  data-anim-delay="200ms"\n  data-anim-easing="ease-out"\n>\n  Customized animation\n</div>'}
+  code={'<div\n  data-anim="slideInLeft"\n  data-anim-duration="800"\n  data-anim-delay="200"\n  data-anim-easing="ease-out"\n  data-anim-once\n>\n  Customized animation\n</div>'}
   lang="html"
 />
 
-<AnimationDemo name="slideInLeft" />
-
-## Run Once or Repeat
-
-<CodeBlock
-  code={'<!-- Only animate once (default) -->\n<div data-anim="fadeIn" data-anim-once="true">\n  Once\n</div>\n\n<!-- Re-animate every time element enters viewport -->\n<div data-anim="fadeIn" data-anim-once="false">\n  Every time\n</div>'}
-  lang="html"
-/>
+See [Attributes](/docs/attributes) for the full reference and [Stagger](/docs/stagger) for cascading sequences.
 
 ## Next Steps
 
-- **[Animations](/docs/animations)** — Browse all 30+ animations
-- **[Triggers](/docs/triggers)** — Learn about viewport, hover, click, and focus triggers
-- **[Stagger](/docs/stagger)** — Create cascading animation sequences
-- **[Attributes](/docs/attributes)** — Full reference for all data-anim attributes
+- [Animations](/docs/animations) — Browse all 30+ animations
+- [Triggers](/docs/triggers) — Viewport, hover, click, and focus
+- [Stagger](/docs/stagger) — Cascading animation sequences
+- [Attributes](/docs/attributes) — Full attribute reference
