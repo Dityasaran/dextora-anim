@@ -1,3 +1,14 @@
+<script setup>
+useHead({
+  script: [
+    {
+      src: 'https://unpkg.com/data-anim@latest/dist/data-anim.js',
+      tagPosition: 'head',
+    },
+  ],
+});
+</script>
+
 <template>
   <div style="font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem;">
     <h1 data-anim="fadeInUp">Nuxt + data-anim</h1>

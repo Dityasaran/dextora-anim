@@ -119,27 +119,15 @@ npmでインストール：
 
 ## Nuxt
 
-npmでインストール：
-
-<CodeBlock code={'npm install data-anim'} lang="bash" />
-
-クライアント専用プラグインを作成。`.client.ts`サフィックスにより、data-animはブラウザでのみ読み込まれ、SSRエラーを回避：
+ルートコンポーネントで`useHead`を使い、CDN経由でdata-animを読み込みます。SSR出力にスクリプトが含まれるため、Anti-FOUC保護が有効になります：
 
 <CodeBlock
-  code={'// app/plugins/data-anim.client.ts\nimport \'data-anim\';\nexport default defineNuxtPlugin(() => {});'}
-  lang="ts"
-  filename="app/plugins/data-anim.client.ts"
-/>
-
-任意のコンポーネントやページで属性を使用：
-
-<CodeBlock
-  code={'<!-- app/app.vue -->\n<template>\n  <div>\n    <h1 data-anim="fadeInUp">Welcome</h1>\n    <p data-anim="fadeInUp" data-anim-delay="200">\n      Built with Nuxt + data-anim\n    </p>\n  </div>\n</template>'}
+  code={'<!-- app/app.vue -->\n<script setup>\nuseHead({\n  script: [\n    {\n      src: \'https://unpkg.com/data-anim@latest/dist/data-anim.js\',\n      tagPosition: \'head\',\n    },\n  ],\n});\n</script>\n\n<template>\n  <div>\n    <h1 data-anim="fadeInUp">Welcome</h1>\n    <p data-anim="fadeInUp" data-anim-delay="200">\n      Built with Nuxt + data-anim\n    </p>\n  </div>\n</template>'}
   lang="vue"
   filename="app/app.vue"
 />
 
-`nuxt.config.ts`での追加設定は不要。Nuxtは`app/plugins/`ディレクトリからプラグインを自動インポートします。
+プラグインや`nuxt.config.ts`の追加設定は不要です。
 
 ## Astro
 

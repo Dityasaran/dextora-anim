@@ -119,27 +119,15 @@ Then use attributes in any Server or Client Component:
 
 ## Nuxt
 
-Install via npm:
-
-<CodeBlock code={'npm install data-anim'} lang="bash" />
-
-Create a client-only plugin. The `.client.ts` suffix ensures data-anim only loads in the browser, avoiding SSR errors:
+Use `useHead` in your root component to load data-anim via CDN. This ensures the script is included in the SSR output for anti-FOUC protection:
 
 <CodeBlock
-  code={'// app/plugins/data-anim.client.ts\nimport \'data-anim\';\nexport default defineNuxtPlugin(() => {});'}
-  lang="ts"
-  filename="app/plugins/data-anim.client.ts"
-/>
-
-Then use attributes in any component or page:
-
-<CodeBlock
-  code={'<!-- app/app.vue -->\n<template>\n  <div>\n    <h1 data-anim="fadeInUp">Welcome</h1>\n    <p data-anim="fadeInUp" data-anim-delay="200">\n      Built with Nuxt + data-anim\n    </p>\n  </div>\n</template>'}
+  code={'<!-- app/app.vue -->\n<script setup>\nuseHead({\n  script: [\n    {\n      src: \'https://unpkg.com/data-anim@latest/dist/data-anim.js\',\n      tagPosition: \'head\',\n    },\n  ],\n});\n</script>\n\n<template>\n  <div>\n    <h1 data-anim="fadeInUp">Welcome</h1>\n    <p data-anim="fadeInUp" data-anim-delay="200">\n      Built with Nuxt + data-anim\n    </p>\n  </div>\n</template>'}
   lang="vue"
   filename="app/app.vue"
 />
 
-No extra configuration in `nuxt.config.ts` needed. Nuxt auto-imports plugins from the `app/plugins/` directory.
+No extra plugins or `nuxt.config.ts` changes needed.
 
 ## Astro
 
