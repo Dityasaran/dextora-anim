@@ -1,0 +1,32 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: スタガー
+description: data-animのスタガーパターンで連続アニメーションを作成。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+import StaggerDemo from '../../../components/StaggerDemo.astro';
+
+# スタガー
+
+スタガーはカスケードアニメーションシーケンスを作成します。パターンを選択してプレビュー。
+
+<StaggerDemo />
+
+## 仕組み
+
+親要素に`data-anim-stagger`を付けて子要素をラップします。`data-anim`を持つ各子要素に遅延が増加します。
+
+<CodeBlock
+  code={'<div data-anim-stagger="100ms">\n  <div data-anim="fadeInUp">0ms delay</div>\n  <div data-anim="fadeInUp">100ms delay</div>\n  <div data-anim="fadeInUp">200ms delay</div>\n</div>'}
+  lang="html"
+/>
+
+## パターン
+
+| パターン | 順序 | 用途 |
+|---------|-------|----------|
+| `start` | 最初から最後 | リスト、カードグリッド |
+| `end` | 最後から最初 | 逆順表示 |
+| `center` | 中央から端 | ヒーローセクション |
+| `edges` | 端から中央 | 対称レイアウト |

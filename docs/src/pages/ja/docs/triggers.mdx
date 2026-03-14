@@ -1,0 +1,68 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: トリガー
+description: data-animの4つのアニメーショントリガーについて。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+import TriggerDemo from '../../../components/TriggerDemo.astro';
+
+# トリガー
+
+data-animは4つのトリガータイプをサポートしています。各タブをクリックして動作を確認。
+
+<TriggerDemo />
+
+## ビューポート（デフォルト）
+
+要素がビューポートにスクロールインすると、`IntersectionObserver`でアニメーションします。
+
+<CodeBlock
+  code={'<div data-anim="fadeInUp">\n  Animates on scroll (default)\n</div>\n\n<!-- With custom offset -->\n<div\n  data-anim="fadeIn"\n  data-anim-offset="200"\n>\n  Triggers 200px into viewport\n</div>'}
+  lang="html"
+/>
+
+## ホバー
+
+`mouseenter`で再生、`mouseleave`でリセット。キーボードユーザー向けに`focus-visible`にも対応。
+
+<CodeBlock
+  code={'<div data-anim="pulse" data-anim-trigger="hover">\n  Hover over me\n</div>'}
+  lang="html"
+/>
+
+## クリック
+
+クリックごとに再生。ボタンやトグルに最適。
+
+<CodeBlock
+  code={'<button data-anim="bounce" data-anim-trigger="click">\n  Click me to bounce\n</button>'}
+  lang="html"
+/>
+
+## フォーカス
+
+要素がフォーカスを受け取ると再生。フォーム入力に最適。
+
+<CodeBlock
+  code={'<input\n  type="text"\n  data-anim="pulse"\n  data-anim-trigger="focus"\n  placeholder="Focus me"\n/>'}
+  lang="html"
+/>
+
+## トリガーの組み合わせ
+
+各要素には1つのトリガーのみ。複数のインタラクションにはネストを使用：
+
+<CodeBlock
+  code={'<div data-anim="fadeInUp">\n  <button data-anim="pulse" data-anim-trigger="hover">\n    Interactive button\n  </button>\n</div>'}
+  lang="html"
+/>
+
+## まとめ
+
+| トリガー | 値 | ユースケース |
+|---------|-------|----------|
+| ビューポート | `viewport`（デフォルト） | スクロール表示 |
+| ホバー | `hover` | ボタン、カード |
+| クリック | `click` | トグル、確認操作 |
+| フォーカス | `focus` | フォーム入力 |

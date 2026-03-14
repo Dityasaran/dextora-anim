@@ -1,0 +1,41 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: レスポンシブ
+description: data-animのレスポンシブ属性でブレークポイントごとにアニメーションを制御。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+import ResponsiveDemo from '../../../components/ResponsiveDemo.astro';
+
+# レスポンシブ
+
+すべてのアニメーションがモバイルに適しているわけではありません。data-animでは画面サイズに応じてアニメーションを切り替えたり無効にできます。
+
+<ResponsiveDemo />
+
+## data-anim-mobile
+
+モバイル（768px未満）でシンプルなアニメーションに切り替え。デスクトップはオリジナル、モバイルはオーバーライドを使用。
+
+<CodeBlock
+  code={'<div\n  data-anim="slideInLeft"\n  data-anim-mobile="fadeIn"\n>\n  Slides on desktop, fades on mobile\n</div>'}
+  lang="html"
+/>
+
+## data-anim-disable
+
+特定のブレークポイントでアニメーションを完全に無効化。
+
+<CodeBlock
+  code={'<!-- No animation on mobile -->\n<div data-anim="slideInLeft" data-anim-disable="mobile">\n  Desktop only\n</div>\n\n<!-- No animation on desktop -->\n<div data-anim="fadeInUp" data-anim-disable="desktop">\n  Mobile only\n</div>'}
+  lang="html"
+/>
+
+| 値 | 効果 |
+|-------|--------|
+| `"mobile"` | 768px未満で無効 |
+| `"desktop"` | 768px以上で無効 |
+
+## モーション軽減
+
+`prefers-reduced-motion: reduce`で自動的にすべてのアニメーションが無効になります。手動での対応は不要。

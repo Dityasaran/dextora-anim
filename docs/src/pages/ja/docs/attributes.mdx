@@ -1,0 +1,89 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: 属性
+description: data-animのすべてのHTML属性の完全なリファレンス。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+import AttributeTable from '../../../components/AttributeTable.astro';
+import AnimationDemo from '../../../components/AnimationDemo.astro';
+
+# 属性
+
+data-animのすべての機能はHTML属性で制御します。JavaScriptの設定は不要。
+
+## 必須
+
+<AttributeTable attributes={[
+  { name: 'data-anim', type: 'string', description: '適用するアニメーション名。全リストはアニメーションを参照。' },
+]} />
+
+<CodeBlock
+  code={'<div data-anim="fadeInUp">\n  Animated element\n</div>'}
+  lang="html"
+/>
+
+## トリガーとタイミング
+
+<AttributeTable attributes={[
+  { name: 'data-anim-trigger', type: '"viewport" | "hover" | "click" | "focus"', default: 'viewport', description: 'アニメーションのトリガー。' },
+  { name: 'data-anim-duration', type: 'string', default: '600ms', description: 'アニメーションの長さ（例："400ms"、"1.2s"）。' },
+  { name: 'data-anim-delay', type: 'string', default: '0ms', description: 'アニメーション開始前の遅延。' },
+  { name: 'data-anim-easing', type: 'string', default: 'ease', description: 'CSSイージング関数（例："ease-out"、"cubic-bezier(0.4, 0, 0.2, 1)"）。' },
+]} />
+
+<CodeBlock
+  code={'<div\n  data-anim="slideInRight"\n  data-anim-duration="800ms"\n  data-anim-delay="200ms"\n  data-anim-easing="ease-out"\n>\n  Customized timing\n</div>'}
+  lang="html"
+/>
+
+<AnimationDemo name="slideInRight" />
+
+## 動作
+
+<AttributeTable attributes={[
+  { name: 'data-anim-once', type: '"true" | "false"', default: 'true', description: 'trueの場合、アニメーションは1回のみ再生。falseの場合、トリガーのたびに再生。' },
+  { name: 'data-anim-offset', type: 'number', default: '0', description: 'トリガー前のビューポートオフセット（ピクセル）。' },
+  { name: 'data-anim-mirror', type: '"true" | "false"', default: 'false', description: '要素がビューポートを離れるときにアニメーションを逆再生。' },
+]} />
+
+<CodeBlock
+  code={'<div\n  data-anim="zoomIn"\n  data-anim-once="false"\n  data-anim-offset="100"\n>\n  Repeats with 100px offset\n</div>'}
+  lang="html"
+/>
+
+## スタガー
+
+<AttributeTable attributes={[
+  { name: 'data-anim-stagger', type: 'string', default: '100ms', description: 'スタガーされた子アニメーション間の遅延。' },
+  { name: 'data-anim-stagger-pattern', type: '"start" | "end" | "center" | "edges"', default: 'start', description: 'スタガー順序のパターン。' },
+]} />
+
+<CodeBlock
+  code={'<div data-anim-stagger="150ms" data-anim-stagger-pattern="center">\n  <div data-anim="fadeInUp">Item 1</div>\n  <div data-anim="fadeInUp">Item 2</div>\n  <div data-anim="fadeInUp">Item 3</div>\n</div>'}
+  lang="html"
+/>
+
+## レスポンシブ
+
+<AttributeTable attributes={[
+  { name: 'data-anim-disable', type: 'string', description: '特定のブレークポイントでアニメーションを無効化（例："mobile"、"tablet"）。' },
+  { name: 'data-anim-mobile', type: 'string', description: 'モバイル画面用のアニメーションオーバーライド。' },
+]} />
+
+<CodeBlock
+  code={'<!-- Disable on mobile -->\n<div data-anim="slideInLeft" data-anim-disable="mobile">\n  Desktop only animation\n</div>\n\n<!-- Different animation on mobile -->\n<div data-anim="slideInLeft" data-anim-mobile="fadeIn">\n  Slides on desktop, fades on mobile\n</div>'}
+  lang="html"
+/>
+
+## 応用
+
+<AttributeTable attributes={[
+  { name: 'data-anim-fill', type: '"forwards" | "backwards" | "both" | "none"', default: 'forwards', description: 'CSS animation-fill-mode。' },
+  { name: 'data-anim-iteration', type: 'number | "infinite"', default: '1', description: 'アニメーションの再生回数。' },
+]} />
+
+<CodeBlock
+  code={'<div\n  data-anim="pulse"\n  data-anim-iteration="infinite"\n>\n  Infinite pulse\n</div>'}
+  lang="html"
+/>

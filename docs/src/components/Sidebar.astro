@@ -1,35 +1,39 @@
 ---
+import { getLocaleFromPath, getLocalizedPath, translations } from '../i18n/translations';
+
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const currentPath = Astro.url.pathname;
+const locale = getLocaleFromPath(currentPath);
+const t = translations[locale].sidebar;
 
 const sections = [
   {
-    title: 'Getting Started',
+    title: t.gettingStarted,
     links: [
-      { href: `${base}docs/getting-started`, label: 'Installation & Setup' },
+      { href: getLocalizedPath('docs/getting-started', locale, base), label: t.installationSetup },
     ],
   },
   {
-    title: 'Core Concepts',
+    title: t.coreConcepts,
     links: [
-      { href: `${base}docs/animations`, label: 'Animations' },
-      { href: `${base}docs/triggers`, label: 'Triggers' },
-      { href: `${base}docs/stagger`, label: 'Stagger' },
-      { href: `${base}docs/attributes`, label: 'Attributes' },
+      { href: getLocalizedPath('docs/animations', locale, base), label: t.animations },
+      { href: getLocalizedPath('docs/triggers', locale, base), label: t.triggers },
+      { href: getLocalizedPath('docs/stagger', locale, base), label: t.stagger },
+      { href: getLocalizedPath('docs/attributes', locale, base), label: t.attributes },
     ],
   },
   {
-    title: 'Advanced',
+    title: t.advanced,
     links: [
-      { href: `${base}docs/responsive`, label: 'Responsive' },
-      { href: `${base}docs/anti-fouc`, label: 'Anti-FOUC' },
+      { href: getLocalizedPath('docs/responsive', locale, base), label: t.responsive },
+      { href: getLocalizedPath('docs/anti-fouc', locale, base), label: t.antiFouc },
     ],
   },
   {
-    title: 'Guides',
+    title: t.guides,
     links: [
-      { href: `${base}docs/typescript`, label: 'TypeScript' },
-      { href: `${base}docs/integration`, label: 'Integration' },
+      { href: getLocalizedPath('docs/typescript', locale, base), label: t.typescript },
+      { href: getLocalizedPath('docs/integration', locale, base), label: t.integration },
     ],
   },
 ];

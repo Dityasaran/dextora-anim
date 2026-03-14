@@ -1,0 +1,38 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: TypeScript
+description: ReactとVueでdata-anim属性の完全な自動補完を取得。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+
+# TypeScript
+
+data-animにはビルトイン型定義が同梱されています。一度インポートするだけで、すべての`data-anim-*`属性の自動補完が有効に。追加設定不要。
+
+## セットアップ
+
+<CodeBlock
+  code={'import \'data-anim\';'}
+  lang="ts"
+/>
+
+これだけです。この1行のインポートで**React（JSX/TSX）**と**Vue**テンプレートの型拡張が登録されます。
+
+## 利用できる機能
+
+すべての`data-anim-*`属性が完全に型付けされ、自動補完が利用可能：
+
+<CodeBlock
+  code={'// React / TSX\n<div\n  data-anim="fadeInUp"             // 30+ animation names\n  data-anim-trigger="scroll"       // scroll, load, click, hover\n  data-anim-easing="spring"        // ease, ease-out-expo, ease-out-back, spring\n  data-anim-stagger-from="center"  // start, end, center, edges\n  data-anim-duration="800"\n  data-anim-delay="200"\n  data-anim-once\n/>'}
+  lang="tsx"
+/>
+
+## エクスポートされた型
+
+カスタムユースケース向けに型を直接インポートできます：
+
+<CodeBlock
+  code={'import type {\n  DataAnimName,         // "fadeIn" | "fadeInUp" | "bounce" | ...\n  DataAnimTrigger,      // "scroll" | "load" | "click" | "hover"\n  DataAnimEasing,       // "ease" | "ease-out-expo" | "ease-out-back" | "spring"\n  DataAnimStaggerFrom,  // "start" | "end" | "center" | "edges"\n  DataAnimDisable,      // "mobile" | "tablet" | "desktop"\n  DataAnimAttributes,   // All data-anim-* attributes as an interface\n} from \'data-anim\';'}
+  lang="ts"
+/>

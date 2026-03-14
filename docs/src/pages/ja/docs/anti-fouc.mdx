@@ -1,0 +1,87 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: Anti-FOUC
+description: data-animが3層の防御システムでFOUC（Flash of Unstyled Content）を防ぐ仕組み。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+import ComparisonTable from '../../../components/ComparisonTable.astro';
+
+# Anti-FOUC
+
+FOUC（Flash of Unstyled Content）とは、アニメーションが実行される前に要素が最終状態で一瞬表示される現象です。data-animは他のライブラリにはない3層の防御システムでこれを解決します。
+
+## FOUCとは？
+
+ページが読み込まれると、HTMLのレンダリングとJavaScriptの実行の間に短い隙間があります。この間、アニメーション対象の要素は最終位置で表示され、アニメーションライブラリが初期化されると開始位置に「ジャンプ」します。
+
+```
+従来のライブラリ（AOSなど）:
+  ページ読み込み → 要素が最終位置で表示 → JS読み込み → 要素が開始位置にジャンプ → アニメーション
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                           これがFOUC
+```
+
+```
+data-anim:
+  ページ読み込み → 要素はCSSで非表示 → JS準備完了 → スムーズにアニメーション
+                  ^^^^^^^^^^^^^^^^^^^^^^
+                  フラッシュもジャンプもなし
+```
+
+## 3層の防御
+
+### 第1層：同期スクリプト
+
+data-animは`<head>`内で同期的な`<script>`タグとして読み込まれます。`async`や`defer`ではありません。これにより、ブラウザがコンテンツをレンダリングする前にCSSが注入されます。
+
+<CodeBlock
+  code={'<!-- Correct: synchronous in <head> -->\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n\n<!-- Wrong: async/defer causes FOUC -->\n<head>\n  <script async src="data-anim.js"></script>\n</head>'}
+  lang="html"
+/>
+
+### 第2層：インラインクリティカルCSS
+
+スクリプトは即座にすべての`[data-anim]`要素を非表示にする小さなCSSルールを注入します：
+
+```css
+[data-anim] { opacity: 0; }
+```
+
+これはブラウザの最初のペイント前に実行されるため、要素がアニメーション前の状態で表示されることはありません。
+
+### 第3層：アニメーションキーフレーム
+
+各アニメーションのキーフレームは非表示状態（opacity: 0、変形位置）から始まり、最終状態にアニメーションします。アニメーションがトリガーされると、要素は非表示から表示へスムーズに遷移します。
+
+## タイミング図
+
+```
+Browser Timeline:
+─────────────────────────────────────────────────────>
+
+1. HTMLパースの開始
+2. <head>内の<script>を検出
+   ├─ CSS注入: [data-anim] { opacity: 0 }     ← 第2層
+   └─ IntersectionObserverのセットアップ
+3. 最初のペイント - data-anim要素は非表示      ← FOUCなし！
+4. 要素がビューポートに入る
+5. アニメーション再生: opacity 0 → 1 + transform ← 第3層
+```
+
+## なぜ同期スクリプトか？
+
+他のライブラリはページレンダリングのブロックを避けるために`async`や`defer`を使用します。しかし、これによりライブラリが要素を非表示にする前にページがペイントされるレースコンディションが発生します。
+
+data-animのスクリプトは非常に小さく（2KB未満）、ブロック時間はごくわずかで、通常5ms未満です。これは意図的なトレードオフです：5msのブロック時間ですべてのFOUCを排除します。
+
+## 他のライブラリとの比較
+
+<ComparisonTable rows={[
+  { feature: 'Anti-FOUCビルトイン', dataAnim: 'yes', aos: 'no', animateCss: 'no', gsap: 'no' },
+  { feature: '読み込み時のフラッシュなし', dataAnim: 'yes', aos: 'no', animateCss: 'no', gsap: 'no' },
+  { feature: 'JSフォールバックなしで動作', dataAnim: 'yes', aos: 'no', animateCss: 'yes', gsap: 'no' },
+  { feature: '設定不要のAnti-FOUC', dataAnim: 'yes', aos: 'no', animateCss: 'no', gsap: 'no' },
+]} />
+
+data-animはこれらすべてを自動的に処理します。追加のCSSは不要。

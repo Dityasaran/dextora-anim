@@ -1,26 +1,48 @@
 ---
+import { getLocaleFromPath, getLocalizedPath, translations } from '../i18n/translations';
+
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const currentPath = Astro.url.pathname;
+const locale = getLocaleFromPath(currentPath);
+const t = translations[locale].nav;
+const altLocale = locale === 'en' ? 'ja' : 'en';
+
+// Build the alternate locale path
+function getAltLocalePath(): string {
+  const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '');
+  let path = currentPath.replace(basePath, '');
+  if (locale === 'ja') {
+    path = path.replace(/^\/ja/, '');
+  }
+  if (!path || path === '/') path = '';
+  if (altLocale === 'ja') {
+    return `${base}ja${path}`;
+  }
+  return `${base}${path.replace(/^\//, '')}` || base;
+}
+
+const altPath = getAltLocalePath();
+const langLabel = locale === 'en' ? '日本語' : 'English';
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <a href={base} class="flex items-center gap-2 text-text hover:text-text no-underline">
+    <a href={locale === 'ja' ? `${base}ja/` : base} class="flex items-center gap-2 text-text hover:text-text no-underline">
       <span class="font-heading font-bold text-xl gradient-text">data-anim</span>
     </a>
 
     <nav class="hidden md:flex items-center gap-6">
       <a
-        href={`${base}docs/getting-started`}
+        href={getLocalizedPath('docs/getting-started', locale, base)}
         class:list={['text-sm font-medium transition-colors no-underline', currentPath.includes('/docs') ? 'text-text' : 'text-text-secondary hover:text-text']}
       >
-        Docs
+        {t.docs}
       </a>
       <a
-        href={`${base}playground`}
+        href={getLocalizedPath('playground', locale, base)}
         class:list={['text-sm font-medium transition-colors no-underline', currentPath.includes('/playground') ? 'text-text' : 'text-text-secondary hover:text-text']}
       >
-        Playground
+        {t.playground}
       </a>
       <a
         href="https://www.npmjs.com/package/data-anim"
@@ -37,6 +59,12 @@ const currentPath = Astro.url.pathname;
         class="text-sm font-medium text-text-secondary hover:text-text transition-colors no-underline"
       >
         GitHub
+      </a>
+      <a
+        href={altPath}
+        class="text-sm font-medium text-text-secondary hover:text-text transition-colors no-underline border-l border-border pl-6"
+      >
+        {langLabel}
       </a>
     </nav>
 
@@ -57,10 +85,11 @@ const currentPath = Astro.url.pathname;
   <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden hidden border-t border-border bg-bg/95 backdrop-blur-md">
     <nav class="flex flex-col p-4 gap-3">
-      <a href={`${base}docs/getting-started`} class="text-sm font-medium text-text-secondary hover:text-text no-underline">Docs</a>
-      <a href={`${base}playground`} class="text-sm font-medium text-text-secondary hover:text-text no-underline">Playground</a>
+      <a href={getLocalizedPath('docs/getting-started', locale, base)} class="text-sm font-medium text-text-secondary hover:text-text no-underline">{t.docs}</a>
+      <a href={getLocalizedPath('playground', locale, base)} class="text-sm font-medium text-text-secondary hover:text-text no-underline">{t.playground}</a>
       <a href="https://www.npmjs.com/package/data-anim" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-text-secondary hover:text-text no-underline">npm</a>
       <a href="https://github.com/ryo-manba/data-anim" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-text-secondary hover:text-text no-underline">GitHub</a>
+      <a href={altPath} class="text-sm font-medium text-text-secondary hover:text-text no-underline border-t border-border pt-3">{langLabel}</a>
     </nav>
   </div>
 </header>

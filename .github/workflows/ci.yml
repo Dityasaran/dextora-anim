@@ -31,5 +31,8 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: i18n sync check
+        run: pnpm --filter docs i18n-check
+
       - name: Build
         run: pnpm build

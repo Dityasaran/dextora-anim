@@ -1,0 +1,217 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: インテグレーション
+description: data-animをあらゆるフレームワークや静的サイトジェネレーターで使用。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+
+# インテグレーション
+
+data-animはHTML属性を使い独自のCSSを注入するため、あらゆるHTMLベースのプロジェクトで動作します。フレームワーク固有の設定は不要。
+
+## 目次
+
+- [Static HTML](#static-html)
+- [React (Vite)](#react-vite)
+- [Vue (Vite)](#vue-vite)
+- [Next.js](#nextjs)
+- [Nuxt](#nuxt)
+- [Astro](#astro)
+- [Hugo](#hugo)
+- [WordPress](#wordpress)
+- [HTMX](#htmx)
+- [Turbo (Hotwire)](#turbo-hotwire)
+
+## Static HTML
+
+最もシンプルな統合方法。scriptタグを追加して属性を使い始めるだけ。
+
+<CodeBlock
+  code={'<!DOCTYPE html>\n<html>\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  <h1 data-anim="fadeInUp">Hello World</h1>\n  <p data-anim="fadeInUp" data-anim-delay="200ms">\n    Welcome to my site.\n  </p>\n</body>\n</html>'}
+  lang="html"
+  filename="index.html"
+/>
+
+## React (Vite)
+
+npmでインストール：
+
+<CodeBlock code={'npm install data-anim'} lang="bash" />
+
+エントリーファイルの先頭で一度インポート。data-animは自動初期化され、MutationObserverでマウントされるコンポーネントを検知します。
+
+<CodeBlock
+  code={'// src/main.jsx\nimport \'data-anim\';\nimport { createRoot } from \'react-dom/client\';\nimport App from \'./App\';\n\ncreateRoot(document.getElementById(\'root\')).render(<App />);'}
+  lang="jsx"
+  filename="src/main.jsx"
+/>
+
+任意のコンポーネントで`data-anim`属性を使用：
+
+<CodeBlock
+  code={'function Features() {\n  return (\n    <section data-anim-stagger="100">\n      <h2 data-anim="fadeInUp">Features</h2>\n      <div data-anim="fadeInUp">Fast</div>\n      <div data-anim="fadeInUp">Lightweight</div>\n      <div data-anim="fadeInUp">Zero config</div>\n    </section>\n  );\n}'}
+  lang="jsx"
+  filename="src/Features.jsx"
+/>
+
+`useEffect`も、refも、ラッパーコンポーネントも不要。
+
+## Vue (Vite)
+
+npmでインストール：
+
+<CodeBlock code={'npm install data-anim'} lang="bash" />
+
+エントリーファイルの先頭で一度インポート。data-animは自動初期化され、MutationObserverでマウントされるコンポーネントを検知します。
+
+<CodeBlock
+  code={'// src/main.js\nimport \'data-anim\';\nimport { createApp } from \'vue\';\nimport App from \'./App.vue\';\n\ncreateApp(App).mount(\'#app\');'}
+  lang="js"
+  filename="src/main.js"
+/>
+
+任意のコンポーネントで`data-anim`属性を使用：
+
+<CodeBlock
+  code={'<template>\n  <section data-anim-stagger="100">\n    <h2 data-anim="fadeInUp">Features</h2>\n    <div data-anim="fadeInUp">Fast</div>\n    <div data-anim="fadeInUp">Lightweight</div>\n    <div data-anim="fadeInUp">Zero config</div>\n  </section>\n</template>'}
+  lang="vue"
+  filename="src/components/Features.vue"
+/>
+
+`onMounted`も、refも、ディレクティブも不要。
+
+## Next.js
+
+npmでインストール：
+
+<CodeBlock code={'npm install data-anim'} lang="bash" />
+
+ルートレイアウトでインポート。Anti-FOUC保護のために`next/script`で`strategy="beforeInteractive"`を使用するか、クライアントコンポーネントでnpmインポート方式を使用：
+
+<CodeBlock
+  code={'// app/layout.tsx\nimport Script from \'next/script\';\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <head>\n        <Script\n          src="https://unpkg.com/data-anim@latest/dist/data-anim.js"\n          strategy="beforeInteractive"\n        />\n      </head>\n      <body>{children}</body>\n    </html>\n  );\n}'}
+  lang="tsx"
+  filename="app/layout.tsx"
+/>
+
+または、クライアントコンポーネント経由でnpmパッケージをインポート。注意：data-animはモジュールレベルで`document`にアクセスするため、SSRエラーを避けるために`useEffect`内でダイナミックインポートを使用：
+
+<CodeBlock
+  code={'// app/DataAnim.tsx\n\'use client\';\nimport { useEffect } from \'react\';\n\nexport default function DataAnim() {\n  useEffect(() => {\n    import(\'data-anim\');\n  }, []);\n  return null;\n}'}
+  lang="tsx"
+  filename="app/DataAnim.tsx"
+/>
+
+<CodeBlock
+  code={'// app/layout.tsx\nimport DataAnim from \'./DataAnim\';\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        <DataAnim />\n        {children}\n      </body>\n    </html>\n  );\n}'}
+  lang="tsx"
+  filename="app/layout.tsx"
+/>
+
+サーバーコンポーネントでもクライアントコンポーネントでも属性を使用可能：
+
+<CodeBlock
+  code={'// app/page.tsx\nexport default function Home() {\n  return (\n    <main>\n      <h1 data-anim="fadeInUp">Welcome</h1>\n      <p data-anim="fadeInUp" data-anim-delay="200">\n        Built with Next.js + data-anim\n      </p>\n    </main>\n  );\n}'}
+  lang="tsx"
+  filename="app/page.tsx"
+/>
+
+## Nuxt
+
+npmでインストール：
+
+<CodeBlock code={'npm install data-anim'} lang="bash" />
+
+クライアント専用プラグインを作成。`.client.ts`サフィックスにより、data-animはブラウザでのみ読み込まれ、SSRエラーを回避：
+
+<CodeBlock
+  code={'// app/plugins/data-anim.client.ts\nimport \'data-anim\';\nexport default defineNuxtPlugin(() => {});'}
+  lang="ts"
+  filename="app/plugins/data-anim.client.ts"
+/>
+
+任意のコンポーネントやページで属性を使用：
+
+<CodeBlock
+  code={'<!-- app/app.vue -->\n<template>\n  <div>\n    <h1 data-anim="fadeInUp">Welcome</h1>\n    <p data-anim="fadeInUp" data-anim-delay="200">\n      Built with Nuxt + data-anim\n    </p>\n  </div>\n</template>'}
+  lang="vue"
+  filename="app/app.vue"
+/>
+
+`nuxt.config.ts`での追加設定は不要。Nuxtは`app/plugins/`ディレクトリからプラグインを自動インポートします。
+
+## Astro
+
+ベースレイアウトに追加：
+
+<CodeBlock
+  code={'---\n// src/layouts/Layout.astro\n---\n<html>\n  <head>\n    <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n  </head>\n  <body>\n    <slot />\n  </body>\n</html>'}
+  lang="astro"
+  filename="src/layouts/Layout.astro"
+/>
+
+任意の`.astro`または`.mdx`ページで使用：
+
+<CodeBlock
+  code={'<section data-anim-stagger="100ms">\n  <h1 data-anim="fadeInUp">Welcome</h1>\n  <p data-anim="fadeInUp">Built with Astro + data-anim</p>\n</section>'}
+  lang="astro"
+/>
+
+## Hugo
+
+ベーステンプレートの`<head>`にスクリプトを追加：
+
+<CodeBlock
+  code={'<!-- layouts/_default/baseof.html -->\n<!DOCTYPE html>\n<html>\n<head>\n  {{ partial "head.html" . }}\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  {{ block "main" . }}{{ end }}\n</body>\n</html>'}
+  lang="html"
+  filename="layouts/_default/baseof.html"
+/>
+
+Markdown内で生のHTMLを使用：
+
+<CodeBlock
+  code={'<!-- content/posts/my-post.md -->\n<div data-anim="fadeInUp">\n\n## My Animated Section\n\nThis content will fade in when scrolled into view.\n\n</div>'}
+  lang="markdown"
+/>
+
+## WordPress
+
+テーマの`header.php`にスクリプトを追加するか、プラグインを使用して`<head>`に注入：
+
+<CodeBlock
+  code={'// functions.php\nfunction enqueue_data_anim() {\n  wp_enqueue_script(\n    \'data-anim\',\n    \'https://unpkg.com/data-anim@latest/dist/data-anim.js\',\n    array(),\n    null,\n    false // Load in <head>, not footer\n  );\n}\nadd_action(\'wp_enqueue_scripts\', \'enqueue_data_anim\');'}
+  lang="php"
+  filename="functions.php"
+/>
+
+テンプレートまたはブロックエディター（カスタムHTMLブロック）で属性を使用：
+
+<CodeBlock
+  code={'<div data-anim="fadeInUp" class="wp-block-group">\n  <h2>Section Title</h2>\n  <p>Section content goes here.</p>\n</div>'}
+  lang="html"
+/>
+
+## HTMX
+
+data-animはHTMXの動的コンテンツスワップとシームレスに連携します。HTMXがコンテンツをスワップした後、data-animのMutationObserverが新しい`[data-anim]`要素を自動的に検知します。
+
+<CodeBlock
+  code={'<div hx-get="/api/content" hx-trigger="click" hx-swap="innerHTML">\n  <button>Load More</button>\n</div>\n\n<!-- Server returns: -->\n<div data-anim="fadeInUp">\n  New content animates automatically!\n</div>'}
+  lang="html"
+/>
+
+追加設定不要。data-animはDOMの変更を監視します。
+
+## Turbo (Hotwire)
+
+HTMXと同様に、Turboはページコンテンツを動的に置換します。data-animは`turbo:load`で自動的に再初期化されます。
+
+<CodeBlock
+  code={'<!-- Just include data-anim in your layout head -->\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n\n<!-- Use normally in any Turbo-driven page -->\n<div data-anim="fadeInUp">\n  This works across Turbo page transitions\n</div>'}
+  lang="html"
+/>
+
+## 基本原則
+
+data-animは設計上フレームワーク非依存です。HTML属性を書ける場所ならどこでも動作します。唯一の要件は、Anti-FOUC保護のためにスクリプトを`<head>`内に（同期的に）読み込むこと。

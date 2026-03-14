@@ -1,0 +1,61 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: はじめに
+description: data-animをインストールして、1分以内に最初のアニメーションを作成。
+---
+
+import CodeBlock from '../../../components/CodeBlock.astro';
+import AnimationDemo from '../../../components/AnimationDemo.astro';
+
+# はじめに
+
+## インストール
+
+### CDN
+
+<CodeBlock
+  code={`<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>`}
+  lang="html"
+/>
+
+### npm
+
+<CodeBlock code={`npm install data-anim`} lang="bash" />
+
+<CodeBlock code={`import 'data-anim';`} lang="js" />
+
+## 基本的な使い方
+
+<CodeBlock
+  code={'<div data-anim="fadeInUp">\n  Hello, animated world!\n</div>'}
+  lang="html"
+/>
+
+<AnimationDemo name="fadeInUp" />
+
+すべての30以上のビルトインアニメーションは[アニメーション](/data-anim/ja/docs/animations)を参照。
+
+## トリガー
+
+デフォルトでは、アニメーションはスクロール時に再生されます。すべてのオプションは[トリガー](/data-anim/ja/docs/triggers)を参照。
+
+<CodeBlock
+  code={'<!-- Hover -->\n<div data-anim="pulse" data-anim-trigger="hover">\n  Hover me\n</div>\n\n<!-- Click -->\n<button data-anim="bounce" data-anim-trigger="click">\n  Click me\n</button>'}
+  lang="html"
+/>
+
+## カスタマイズ
+
+<CodeBlock
+  code={'<div\n  data-anim="slideInLeft"\n  data-anim-duration="800"\n  data-anim-delay="200"\n  data-anim-easing="ease-out"\n  data-anim-once\n>\n  Customized animation\n</div>'}
+  lang="html"
+/>
+
+完全なリファレンスは[属性](/data-anim/ja/docs/attributes)、カスケードシーケンスは[スタガー](/data-anim/ja/docs/stagger)を参照。
+
+## 次のステップ
+
+- [アニメーション](/data-anim/ja/docs/animations) — 30以上のアニメーションを閲覧
+- [トリガー](/data-anim/ja/docs/triggers) — ビューポート、ホバー、クリック、フォーカス
+- [スタガー](/data-anim/ja/docs/stagger) — カスケードアニメーションシーケンス
+- [属性](/data-anim/ja/docs/attributes) — 属性の完全なリファレンス
