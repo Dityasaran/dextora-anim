@@ -78,10 +78,10 @@ const categories = [
 
       <!-- CTAs -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-anim="fadeInUp" data-anim-delay="300ms">
-        <a href={`${import.meta.env.BASE_URL}docs/getting-started`} class="btn-primary">
+        <a href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}docs/getting-started`} class="btn-primary">
           Get Started
         </a>
-        <a href={`${import.meta.env.BASE_URL}playground`} class="btn-secondary">
+        <a href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}playground`} class="btn-secondary">
           Playground
         </a>
       </div>
@@ -153,7 +153,7 @@ const categories = [
       </div>
 
       <div class="text-center mt-8" data-anim="fadeInUp" data-anim-delay="300ms">
-        <a href={`${import.meta.env.BASE_URL}docs/getting-started`} class="text-accent hover:text-accent-light font-semibold text-lg">
+        <a href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}docs/getting-started`} class="text-accent hover:text-accent-light font-semibold text-lg">
           Read the full docs &rarr;
         </a>
       </div>
@@ -171,28 +171,25 @@ const categories = [
         From subtle fades to playful bounces. Every animation is GPU-accelerated and respects <code class="text-accent-light">prefers-reduced-motion</code>.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {categories.map((cat) => (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {categories.map((cat, i) => (
           <div class={`showcase-card glass-card overflow-hidden ${cat.span}`} data-anim="fadeInUp" data-anim-once>
-            <!-- Preview area -->
-            <div class="showcase-preview">
-              <div class="flex flex-wrap gap-2 justify-center">
-                {cat.anims.map((anim) => (
-                  <div
-                    class={`showcase-dot bg-gradient-to-br ${cat.color}`}
-                    data-anim={anim}
-                    data-anim-trigger="hover"
-                  />
+            <!-- Preview area: large hero dot + smaller satellite dots -->
+            <div class="showcase-preview" data-showcase-color={cat.color}>
+              <div class={`showcase-hero bg-gradient-to-br ${cat.color}`} data-gallery-anim={cat.anims[0]} />
+              <div class="showcase-satellites">
+                {cat.anims.slice(1).map((anim) => (
+                  <div class={`showcase-sat bg-gradient-to-br ${cat.color}`} data-gallery-anim={anim} />
                 ))}
               </div>
             </div>
             <!-- Info -->
-            <div class="p-5">
-              <h3 class="text-base font-heading font-semibold mb-1">{cat.name}</h3>
-              <p class="text-sm text-text-secondary mb-3">{cat.desc}</p>
+            <div class="p-6">
+              <h3 class="text-lg font-heading font-semibold mb-1.5">{cat.name}</h3>
+              <p class="text-sm text-text-secondary mb-4">{cat.desc}</p>
               <div class="flex flex-wrap gap-1.5">
                 {cat.anims.map((anim) => (
-                  <code class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-bg-surface text-text-muted">{anim}</code>
+                  <code class="showcase-tag">{anim}</code>
                 ))}
               </div>
             </div>
@@ -201,7 +198,7 @@ const categories = [
       </div>
 
       <div class="text-center mt-10" data-anim="fadeInUp">
-        <a href={`${import.meta.env.BASE_URL}docs/animations`} class="text-accent hover:text-accent-light font-semibold text-lg">
+        <a href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}docs/animations`} class="text-accent hover:text-accent-light font-semibold text-lg">
           Browse all animations &rarr;
         </a>
       </div>
@@ -248,30 +245,64 @@ const categories = [
   .showcase-card {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .showcase-card:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.08);
   }
 
   .showcase-preview {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 2rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 140px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+    gap: 1rem;
+    min-height: 180px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+    position: relative;
+    overflow: hidden;
   }
 
-  .showcase-dot {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: box-shadow 0.2s;
+  .showcase-hero {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
   }
-  .showcase-dot:hover {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+
+  .showcase-satellites {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .showcase-sat {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    opacity: 0.6;
+  }
+
+  .showcase-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--color-bg-surface);
+    color: var(--color-text-muted);
+    transition: color 0.2s, background 0.2s;
+  }
+  .showcase-card:hover .showcase-tag {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--color-accent-light);
   }
 </style>
 
 <script>
+  // Copy install command
   document.getElementById('copy-install')?.addEventListener('click', async () => {
     await navigator.clipboard.writeText('npm install data-anim');
     const btn = document.getElementById('copy-install')!;
@@ -279,5 +310,30 @@ const categories = [
     setTimeout(() => {
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
     }, 2000);
+  });
+
+  // Showcase card hover → animate child dots
+  document.querySelectorAll('.showcase-card').forEach(function(card) {
+    var dots = card.querySelectorAll('[data-gallery-anim]');
+    if (!dots.length) return;
+    var animating = false;
+    card.addEventListener('mouseenter', function() {
+      if (animating) return;
+      animating = true;
+      var done = 0;
+      dots.forEach(function(dot, i) {
+        var name = dot.getAttribute('data-gallery-anim');
+        setTimeout(function() {
+          dot.style.animation = 'none';
+          dot.offsetWidth;
+          dot.style.animation = 'da-' + name + ' 1.2s ease both';
+          dot.addEventListener('animationend', function() {
+            dot.style.animation = '';
+            done++;
+            if (done >= dots.length) animating = false;
+          }, { once: true });
+        }, i * 80);
+      });
+    });
   });
 </script>
