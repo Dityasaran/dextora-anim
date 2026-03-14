@@ -11,11 +11,14 @@ vi.mock('../../src/core/observer', () => ({
 import { setupTrigger } from '../../src/core/triggers';
 import { playAnimation, createObserver } from '../../src/core/observer';
 
-vi.stubGlobal('IntersectionObserver', class {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-});
+vi.stubGlobal(
+  'IntersectionObserver',
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
 
 vi.stubGlobal('innerWidth', 1200);
 

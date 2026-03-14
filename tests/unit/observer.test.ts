@@ -4,11 +4,14 @@ import { animationMap } from '../../src/animations/index';
 import type { DataAnimElement } from '../../src/types';
 
 // Mock IntersectionObserver
-vi.stubGlobal('IntersectionObserver', class {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-});
+vi.stubGlobal(
+  'IntersectionObserver',
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
 
 function createElement(attrs: Record<string, string> = {}): DataAnimElement {
   const el = document.createElement('div') as DataAnimElement;

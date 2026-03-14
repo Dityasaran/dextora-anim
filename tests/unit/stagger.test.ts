@@ -14,8 +14,9 @@ function createStaggerDOM(count: number, interval: string, from?: string): HTMLE
 }
 
 function getDelays(parent: HTMLElement): string[] {
-  return Array.from(parent.querySelectorAll<HTMLElement>('[data-anim]'))
-    .map(el => el.style.animationDelay);
+  return Array.from(parent.querySelectorAll<HTMLElement>('[data-anim]')).map(
+    (el) => el.style.animationDelay,
+  );
 }
 
 describe('applyStagger', () => {
