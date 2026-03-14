@@ -15,18 +15,7 @@ data-anim works with any HTML-based project. Since it uses HTML attributes and i
 The simplest integration. Add the script tag and start using attributes.
 
 <CodeBlock
-  code={`<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>
-</head>
-<body>
-  <h1 data-anim="fadeInUp">Hello World</h1>
-  <p data-anim="fadeInUp" data-anim-delay="200ms">
-    Welcome to my site.
-  </p>
-</body>
-</html>`}
+  code={'<!DOCTYPE html>\n<html>\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  <h1 data-anim="fadeInUp">Hello World</h1>\n  <p data-anim="fadeInUp" data-anim-delay="200ms">\n    Welcome to my site.\n  </p>\n</body>\n</html>'}
   lang="html"
   filename="index.html"
 />
@@ -36,17 +25,7 @@ The simplest integration. Add the script tag and start using attributes.
 Add the script to your theme's `header.php` or use a plugin to inject it in the `<head>`.
 
 <CodeBlock
-  code={`// functions.php
-function enqueue_data_anim() {
-  wp_enqueue_script(
-    'data-anim',
-    'https://unpkg.com/data-anim@latest/dist/data-anim.js',
-    array(),
-    null,
-    false // Load in <head>, not footer
-  );
-}
-add_action('wp_enqueue_scripts', 'enqueue_data_anim');`}
+  code={'// functions.php\nfunction enqueue_data_anim() {\n  wp_enqueue_script(\n    \'data-anim\',\n    \'https://unpkg.com/data-anim@latest/dist/data-anim.js\',\n    array(),\n    null,\n    false // Load in <head>, not footer\n  );\n}\nadd_action(\'wp_enqueue_scripts\', \'enqueue_data_anim\');'}
   lang="php"
   filename="functions.php"
 />
@@ -54,10 +33,7 @@ add_action('wp_enqueue_scripts', 'enqueue_data_anim');`}
 Then use attributes in your templates or the block editor (Custom HTML block):
 
 <CodeBlock
-  code={`<div data-anim="fadeInUp" class="wp-block-group">
-  <h2>Section Title</h2>
-  <p>Section content goes here.</p>
-</div>`}
+  code={'<div data-anim="fadeInUp" class="wp-block-group">\n  <h2>Section Title</h2>\n  <p>Section content goes here.</p>\n</div>'}
   lang="html"
 />
 
@@ -66,17 +42,7 @@ Then use attributes in your templates or the block editor (Custom HTML block):
 Add the script to your base template's `<head>`:
 
 <CodeBlock
-  code={`<!-- layouts/_default/baseof.html -->
-<!DOCTYPE html>
-<html>
-<head>
-  {{ partial "head.html" . }}
-  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>
-</head>
-<body>
-  {{ block "main" . }}{{ end }}
-</body>
-</html>`}
+  code={'<!-- layouts/_default/baseof.html -->\n<!DOCTYPE html>\n<html>\n<head>\n  {{ partial "head.html" . }}\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  {{ block "main" . }}{{ end }}\n</body>\n</html>'}
   lang="html"
   filename="layouts/_default/baseof.html"
 />
@@ -84,14 +50,7 @@ Add the script to your base template's `<head>`:
 Use in your Markdown with raw HTML:
 
 <CodeBlock
-  code={`<!-- content/posts/my-post.md -->
-<div data-anim="fadeInUp">
-
-## My Animated Section
-
-This content will fade in when scrolled into view.
-
-</div>`}
+  code={'<!-- content/posts/my-post.md -->\n<div data-anim="fadeInUp">\n\n## My Animated Section\n\nThis content will fade in when scrolled into view.\n\n</div>'}
   lang="markdown"
 />
 
@@ -100,17 +59,7 @@ This content will fade in when scrolled into view.
 Add to your base layout:
 
 <CodeBlock
-  code={`---
-// src/layouts/Layout.astro
----
-<html>
-  <head>
-    <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>
-  </head>
-  <body>
-    <slot />
-  </body>
-</html>`}
+  code={'---\n// src/layouts/Layout.astro\n---\n<html>\n  <head>\n    <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n  </head>\n  <body>\n    <slot />\n  </body>\n</html>'}
   lang="astro"
   filename="src/layouts/Layout.astro"
 />
@@ -118,11 +67,68 @@ Add to your base layout:
 Use in any `.astro` or `.mdx` page:
 
 <CodeBlock
-  code={`<section data-anim-stagger="100ms">
-  <h1 data-anim="fadeInUp">Welcome</h1>
-  <p data-anim="fadeInUp">Built with Astro + data-anim</p>
-</section>`}
+  code={'<section data-anim-stagger="100ms">\n  <h1 data-anim="fadeInUp">Welcome</h1>\n  <p data-anim="fadeInUp">Built with Astro + data-anim</p>\n</section>'}
   lang="astro"
+/>
+
+## React (Vite)
+
+Install via npm:
+
+<CodeBlock code={'npm install data-anim'} lang="bash" />
+
+Import once at the top of your entry file. data-anim auto-initializes and uses MutationObserver to detect components as they mount.
+
+<CodeBlock
+  code={'// src/main.jsx\nimport \'data-anim\';\nimport { createRoot } from \'react-dom/client\';\nimport App from \'./App\';\n\ncreateRoot(document.getElementById(\'root\')).render(<App />);'}
+  lang="jsx"
+  filename="src/main.jsx"
+/>
+
+Then use `data-anim` attributes in any component:
+
+<CodeBlock
+  code={'function Features() {\n  return (\n    <section data-anim-stagger="100">\n      <h2 data-anim="fadeInUp">Features</h2>\n      <div data-anim="fadeInUp">Fast</div>\n      <div data-anim="fadeInUp">Lightweight</div>\n      <div data-anim="fadeInUp">Zero config</div>\n    </section>\n  );\n}'}
+  lang="jsx"
+  filename="src/Features.jsx"
+/>
+
+No `useEffect`, no refs, no wrapper components needed.
+
+## Next.js
+
+Install via npm:
+
+<CodeBlock code={'npm install data-anim'} lang="bash" />
+
+Import in your root layout. Use `next/script` with `strategy="beforeInteractive"` for anti-FOUC protection, or use the npm import approach in a Client Component:
+
+<CodeBlock
+  code={'// app/layout.tsx\nimport Script from \'next/script\';\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <head>\n        <Script\n          src="https://unpkg.com/data-anim@latest/dist/data-anim.js"\n          strategy="beforeInteractive"\n        />\n      </head>\n      <body>{children}</body>\n    </html>\n  );\n}'}
+  lang="tsx"
+  filename="app/layout.tsx"
+/>
+
+Alternatively, import the npm package via a Client Component:
+
+<CodeBlock
+  code={'// app/DataAnim.tsx\n\'use client\';\nimport \'data-anim\';\nexport default function DataAnim() {\n  return null;\n}'}
+  lang="tsx"
+  filename="app/DataAnim.tsx"
+/>
+
+<CodeBlock
+  code={'// app/layout.tsx\nimport DataAnim from \'./DataAnim\';\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        <DataAnim />\n        {children}\n      </body>\n    </html>\n  );\n}'}
+  lang="tsx"
+  filename="app/layout.tsx"
+/>
+
+Then use attributes in any Server or Client Component:
+
+<CodeBlock
+  code={'// app/page.tsx\nexport default function Home() {\n  return (\n    <main>\n      <h1 data-anim="fadeInUp">Welcome</h1>\n      <p data-anim="fadeInUp" data-anim-delay="200">\n        Built with Next.js + data-anim\n      </p>\n    </main>\n  );\n}'}
+  lang="tsx"
+  filename="app/page.tsx"
 />
 
 ## HTMX
@@ -130,14 +136,7 @@ Use in any `.astro` or `.mdx` page:
 data-anim works seamlessly with HTMX's dynamic content swapping. After HTMX swaps content, data-anim's MutationObserver automatically picks up new `[data-anim]` elements.
 
 <CodeBlock
-  code={`<div hx-get="/api/content" hx-trigger="click" hx-swap="innerHTML">
-  <button>Load More</button>
-</div>
-
-<!-- Server returns: -->
-<div data-anim="fadeInUp">
-  New content animates automatically!
-</div>`}
+  code={'<div hx-get="/api/content" hx-trigger="click" hx-swap="innerHTML">\n  <button>Load More</button>\n</div>\n\n<!-- Server returns: -->\n<div data-anim="fadeInUp">\n  New content animates automatically!\n</div>'}
   lang="html"
 />
 
@@ -148,15 +147,7 @@ No extra configuration needed. data-anim watches the DOM for changes.
 Similar to HTMX, Turbo replaces page content dynamically. data-anim re-initializes automatically on `turbo:load`.
 
 <CodeBlock
-  code={`<!-- Just include data-anim in your layout head -->
-<head>
-  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>
-</head>
-
-<!-- Use normally in any Turbo-driven page -->
-<div data-anim="fadeInUp">
-  This works across Turbo page transitions
-</div>`}
+  code={'<!-- Just include data-anim in your layout head -->\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n\n<!-- Use normally in any Turbo-driven page -->\n<div data-anim="fadeInUp">\n  This works across Turbo page transitions\n</div>'}
   lang="html"
 />
 

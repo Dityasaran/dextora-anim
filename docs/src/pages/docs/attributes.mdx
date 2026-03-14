@@ -19,7 +19,7 @@ Every data-anim feature is controlled through HTML attributes. No JavaScript con
 ]} />
 
 <CodeBlock
-  code={`<div data-anim="fadeInUp">Animated element</div>`}
+  code={'<div data-anim="fadeInUp">\n  Animated element\n</div>'}
   lang="html"
 />
 
@@ -33,15 +33,7 @@ Every data-anim feature is controlled through HTML attributes. No JavaScript con
 ]} />
 
 <CodeBlock
-  code={`<div
-  data-anim="slideInRight"
-  data-anim-trigger="viewport"
-  data-anim-duration="800ms"
-  data-anim-delay="200ms"
-  data-anim-easing="ease-out"
->
-  Customized timing
-</div>`}
+  code={'<div\n  data-anim="slideInRight"\n  data-anim-duration="800ms"\n  data-anim-delay="200ms"\n  data-anim-easing="ease-out"\n>\n  Customized timing\n</div>'}
   lang="html"
 />
 
@@ -56,9 +48,7 @@ Every data-anim feature is controlled through HTML attributes. No JavaScript con
 ]} />
 
 <CodeBlock
-  code={`<div data-anim="zoomIn" data-anim-once="false" data-anim-offset="100">
-  Repeats with 100px offset
-</div>`}
+  code={'<div\n  data-anim="zoomIn"\n  data-anim-once="false"\n  data-anim-offset="100"\n>\n  Repeats with 100px offset\n</div>'}
   lang="html"
 />
 
@@ -70,11 +60,7 @@ Every data-anim feature is controlled through HTML attributes. No JavaScript con
 ]} />
 
 <CodeBlock
-  code={`<div data-anim-stagger="150ms" data-anim-stagger-pattern="center">
-  <div data-anim="fadeInUp">Item 1</div>
-  <div data-anim="fadeInUp">Item 2</div>
-  <div data-anim="fadeInUp">Item 3</div>
-</div>`}
+  code={'<div data-anim-stagger="150ms" data-anim-stagger-pattern="center">\n  <div data-anim="fadeInUp">Item 1</div>\n  <div data-anim="fadeInUp">Item 2</div>\n  <div data-anim="fadeInUp">Item 3</div>\n</div>'}
   lang="html"
 />
 
@@ -86,15 +72,7 @@ Every data-anim feature is controlled through HTML attributes. No JavaScript con
 ]} />
 
 <CodeBlock
-  code={`<!-- Disable on mobile -->
-<div data-anim="slideInLeft" data-anim-disable="mobile">
-  Desktop only animation
-</div>
-
-<!-- Different animation on mobile -->
-<div data-anim="slideInLeft" data-anim-mobile="fadeIn">
-  Slides on desktop, fades on mobile
-</div>`}
+  code={'<!-- Disable on mobile -->\n<div data-anim="slideInLeft" data-anim-disable="mobile">\n  Desktop only animation\n</div>\n\n<!-- Different animation on mobile -->\n<div data-anim="slideInLeft" data-anim-mobile="fadeIn">\n  Slides on desktop, fades on mobile\n</div>'}
   lang="html"
 />
 
@@ -106,8 +84,6 @@ Every data-anim feature is controlled through HTML attributes. No JavaScript con
 ]} />
 
 <CodeBlock
-  code={`<div data-anim="pulse" data-anim-iteration="infinite">
-  Infinite pulse
-</div>`}
+  code={'<div\n  data-anim="pulse"\n  data-anim-iteration="infinite"\n>\n  Infinite pulse\n</div>'}
   lang="html"
 />

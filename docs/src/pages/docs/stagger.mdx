@@ -16,13 +16,7 @@ Stagger creates cascading animation sequences where child elements animate one a
 Wrap animated children in a parent with `data-anim-stagger`. Each child gets an increasing delay automatically.
 
 <CodeBlock
-  code={`<div data-anim-stagger="100ms">
-  <div data-anim="fadeInUp">Item 1 — 0ms delay</div>
-  <div data-anim="fadeInUp">Item 2 — 100ms delay</div>
-  <div data-anim="fadeInUp">Item 3 — 200ms delay</div>
-  <div data-anim="fadeInUp">Item 4 — 300ms delay</div>
-  <div data-anim="fadeInUp">Item 5 — 400ms delay</div>
-</div>`}
+  code={'<div data-anim-stagger="100ms">\n  <div data-anim="fadeInUp">Item 1 \u2014 0ms delay</div>\n  <div data-anim="fadeInUp">Item 2 \u2014 100ms delay</div>\n  <div data-anim="fadeInUp">Item 3 \u2014 200ms delay</div>\n  <div data-anim="fadeInUp">Item 4 \u2014 300ms delay</div>\n  <div data-anim="fadeInUp">Item 5 \u2014 400ms delay</div>\n</div>'}
   lang="html"
 />
 
@@ -35,13 +29,7 @@ Control the order in which children animate with `data-anim-stagger-pattern`.
 Children animate from first to last.
 
 <CodeBlock
-  code={`<div data-anim-stagger="100ms" data-anim-stagger-pattern="start">
-  <div data-anim="fadeInUp">1st</div>
-  <div data-anim="fadeInUp">2nd</div>
-  <div data-anim="fadeInUp">3rd</div>
-  <div data-anim="fadeInUp">4th</div>
-  <div data-anim="fadeInUp">5th</div>
-</div>`}
+  code={'<div data-anim-stagger="100ms" data-anim-stagger-pattern="start">\n  <div data-anim="fadeInUp">1st</div>\n  <div data-anim="fadeInUp">2nd</div>\n  <div data-anim="fadeInUp">3rd</div>\n  <div data-anim="fadeInUp">4th</div>\n  <div data-anim="fadeInUp">5th</div>\n</div>'}
   lang="html"
 />
 
@@ -55,13 +43,7 @@ Delay:  0    100   200   300   400
 Children animate from last to first.
 
 <CodeBlock
-  code={`<div data-anim-stagger="100ms" data-anim-stagger-pattern="end">
-  <div data-anim="fadeInUp">5th</div>
-  <div data-anim="fadeInUp">4th</div>
-  <div data-anim="fadeInUp">3rd</div>
-  <div data-anim="fadeInUp">2nd</div>
-  <div data-anim="fadeInUp">1st</div>
-</div>`}
+  code={'<div data-anim-stagger="100ms" data-anim-stagger-pattern="end">\n  <div data-anim="fadeInUp">5th</div>\n  <div data-anim="fadeInUp">4th</div>\n  <div data-anim="fadeInUp">3rd</div>\n  <div data-anim="fadeInUp">2nd</div>\n  <div data-anim="fadeInUp">1st</div>\n</div>'}
   lang="html"
 />
 
@@ -75,13 +57,7 @@ Delay: 400   300   200   100    0
 Children animate outward from the center.
 
 <CodeBlock
-  code={`<div data-anim-stagger="100ms" data-anim-stagger-pattern="center">
-  <div data-anim="fadeInUp">3rd</div>
-  <div data-anim="fadeInUp">2nd</div>
-  <div data-anim="fadeInUp">1st</div>
-  <div data-anim="fadeInUp">2nd</div>
-  <div data-anim="fadeInUp">3rd</div>
-</div>`}
+  code={'<div data-anim-stagger="100ms" data-anim-stagger-pattern="center">\n  <div data-anim="fadeInUp">3rd</div>\n  <div data-anim="fadeInUp">2nd</div>\n  <div data-anim="fadeInUp">1st</div>\n  <div data-anim="fadeInUp">2nd</div>\n  <div data-anim="fadeInUp">3rd</div>\n</div>'}
   lang="html"
 />
 
@@ -95,13 +71,7 @@ Delay: 200   100    0    100   200
 Children animate inward from both edges toward the center.
 
 <CodeBlock
-  code={`<div data-anim-stagger="100ms" data-anim-stagger-pattern="edges">
-  <div data-anim="fadeInUp">1st</div>
-  <div data-anim="fadeInUp">2nd</div>
-  <div data-anim="fadeInUp">3rd</div>
-  <div data-anim="fadeInUp">2nd</div>
-  <div data-anim="fadeInUp">1st</div>
-</div>`}
+  code={'<div data-anim-stagger="100ms" data-anim-stagger-pattern="edges">\n  <div data-anim="fadeInUp">1st</div>\n  <div data-anim="fadeInUp">2nd</div>\n  <div data-anim="fadeInUp">3rd</div>\n  <div data-anim="fadeInUp">2nd</div>\n  <div data-anim="fadeInUp">1st</div>\n</div>'}
   lang="html"
 />
 
@@ -115,37 +85,21 @@ Delay:  0    100   200   100    0
 ### Card Grid
 
 <CodeBlock
-  code={`<div class="grid grid-cols-3 gap-4" data-anim-stagger="80ms">
-  <div class="card" data-anim="fadeInUp">Card 1</div>
-  <div class="card" data-anim="fadeInUp">Card 2</div>
-  <div class="card" data-anim="fadeInUp">Card 3</div>
-  <div class="card" data-anim="fadeInUp">Card 4</div>
-  <div class="card" data-anim="fadeInUp">Card 5</div>
-  <div class="card" data-anim="fadeInUp">Card 6</div>
-</div>`}
+  code={'<div class="grid grid-cols-3 gap-4" data-anim-stagger="80ms">\n  <div class="card" data-anim="fadeInUp">Card 1</div>\n  <div class="card" data-anim="fadeInUp">Card 2</div>\n  <div class="card" data-anim="fadeInUp">Card 3</div>\n  <div class="card" data-anim="fadeInUp">Card 4</div>\n  <div class="card" data-anim="fadeInUp">Card 5</div>\n  <div class="card" data-anim="fadeInUp">Card 6</div>\n</div>'}
   lang="html"
 />
 
 ### Navigation List
 
 <CodeBlock
-  code={`<nav data-anim-stagger="60ms">
-  <a data-anim="fadeInLeft" href="/">Home</a>
-  <a data-anim="fadeInLeft" href="/about">About</a>
-  <a data-anim="fadeInLeft" href="/work">Work</a>
-  <a data-anim="fadeInLeft" href="/contact">Contact</a>
-</nav>`}
+  code={'<nav data-anim-stagger="60ms">\n  <a data-anim="fadeInLeft" href="/">Home</a>\n  <a data-anim="fadeInLeft" href="/about">About</a>\n  <a data-anim="fadeInLeft" href="/work">Work</a>\n  <a data-anim="fadeInLeft" href="/contact">Contact</a>\n</nav>'}
   lang="html"
 />
 
 ### Hero Section
 
 <CodeBlock
-  code={`<section data-anim-stagger="150ms" data-anim-stagger-pattern="start">
-  <h1 data-anim="fadeInUp">Welcome</h1>
-  <p data-anim="fadeInUp">Description text here</p>
-  <button data-anim="fadeInUp">Get Started</button>
-</section>`}
+  code={'<section data-anim-stagger="150ms" data-anim-stagger-pattern="start">\n  <h1 data-anim="fadeInUp">Welcome</h1>\n  <p data-anim="fadeInUp">Description text here</p>\n  <button data-anim="fadeInUp">Get Started</button>\n</section>'}
   lang="html"
 />
 

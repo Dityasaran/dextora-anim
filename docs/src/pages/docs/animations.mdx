@@ -4,140 +4,307 @@ title: Animations
 description: Browse all 30+ built-in animations in data-anim.
 ---
 
-import AnimationDemo from '../../components/AnimationDemo.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 
 # Animations
 
-data-anim ships with 30+ animations out of the box. Each one is a pure CSS keyframe animation, optimized for performance.
+Click any animation name to preview it on the element below.
 
-## Fade
+<div class="anim-explorer">
+  <div class="anim-preview-area">
+    <div class="anim-preview-stage">
+      <div id="anim-target" class="anim-preview-box">
+        <span>data-anim</span>
+      </div>
+    </div>
+    <div class="anim-preview-info">
+      <code id="anim-current-name" class="anim-current-label">fadeInUp</code>
+      <div class="anim-code-wrap">
+        <code id="anim-code-output" class="anim-code-output">&lt;div data-anim="fadeInUp"&gt;...&lt;/div&gt;</code>
+        <button id="anim-copy-btn" class="anim-copy-btn" aria-label="Copy code">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
 
-Smooth opacity transitions, optionally combined with directional movement.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-  <AnimationDemo name="fadeIn" />
-  <AnimationDemo name="fadeOut" />
-  <AnimationDemo name="fadeInUp" />
-  <AnimationDemo name="fadeInDown" />
-  <AnimationDemo name="fadeInLeft" />
-  <AnimationDemo name="fadeInRight" />
+  <div class="anim-sidebar">
+    <div class="anim-category">
+      <h3 class="anim-category-title">Fade</h3>
+      <button class="anim-btn active" data-play="fadeIn">fadeIn</button>
+      <button class="anim-btn" data-play="fadeOut">fadeOut</button>
+      <button class="anim-btn" data-play="fadeInUp">fadeInUp</button>
+      <button class="anim-btn" data-play="fadeInDown">fadeInDown</button>
+      <button class="anim-btn" data-play="fadeInLeft">fadeInLeft</button>
+      <button class="anim-btn" data-play="fadeInRight">fadeInRight</button>
+    </div>
+    <div class="anim-category">
+      <h3 class="anim-category-title">Slide</h3>
+      <button class="anim-btn" data-play="slideInUp">slideInUp</button>
+      <button class="anim-btn" data-play="slideInDown">slideInDown</button>
+      <button class="anim-btn" data-play="slideInLeft">slideInLeft</button>
+      <button class="anim-btn" data-play="slideInRight">slideInRight</button>
+    </div>
+    <div class="anim-category">
+      <h3 class="anim-category-title">Zoom</h3>
+      <button class="anim-btn" data-play="zoomIn">zoomIn</button>
+      <button class="anim-btn" data-play="zoomOut">zoomOut</button>
+      <button class="anim-btn" data-play="zoomInUp">zoomInUp</button>
+      <button class="anim-btn" data-play="zoomInDown">zoomInDown</button>
+    </div>
+    <div class="anim-category">
+      <h3 class="anim-category-title">Bounce</h3>
+      <button class="anim-btn" data-play="bounce">bounce</button>
+      <button class="anim-btn" data-play="bounceIn">bounceIn</button>
+      <button class="anim-btn" data-play="bounceInUp">bounceInUp</button>
+      <button class="anim-btn" data-play="bounceInDown">bounceInDown</button>
+    </div>
+    <div class="anim-category">
+      <h3 class="anim-category-title">Attention</h3>
+      <button class="anim-btn" data-play="shake">shake</button>
+      <button class="anim-btn" data-play="pulse">pulse</button>
+      <button class="anim-btn" data-play="wobble">wobble</button>
+      <button class="anim-btn" data-play="flip">flip</button>
+      <button class="anim-btn" data-play="swing">swing</button>
+      <button class="anim-btn" data-play="rubberBand">rubberBand</button>
+    </div>
+    <div class="anim-category">
+      <h3 class="anim-category-title">Rotate</h3>
+      <button class="anim-btn" data-play="rotateIn">rotateIn</button>
+      <button class="anim-btn" data-play="rotateInDownLeft">rotateInDownLeft</button>
+      <button class="anim-btn" data-play="rotateInDownRight">rotateInDownRight</button>
+    </div>
+    <div class="anim-category">
+      <h3 class="anim-category-title">Special</h3>
+      <button class="anim-btn" data-play="blur">blur</button>
+      <button class="anim-btn" data-play="clipReveal">clipReveal</button>
+      <button class="anim-btn" data-play="typewriter">typewriter</button>
+    </div>
+  </div>
 </div>
 
-<CodeBlock
-  code={`<div data-anim="fadeInUp">Fades in from below</div>`}
-  lang="html"
-/>
-
-## Slide
-
-Elements slide in from a direction without opacity change.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  <AnimationDemo name="slideInUp" />
-  <AnimationDemo name="slideInDown" />
-  <AnimationDemo name="slideInLeft" />
-  <AnimationDemo name="slideInRight" />
-</div>
-
-<CodeBlock
-  code={`<div data-anim="slideInLeft">Slides in from the left</div>`}
-  lang="html"
-/>
-
-## Zoom
-
-Scale-based entrance animations.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  <AnimationDemo name="zoomIn" />
-  <AnimationDemo name="zoomOut" />
-  <AnimationDemo name="zoomInUp" />
-  <AnimationDemo name="zoomInDown" />
-</div>
-
-<CodeBlock
-  code={`<div data-anim="zoomIn">Zooms in</div>`}
-  lang="html"
-/>
-
-## Bounce
-
-Playful, spring-like animations.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  <AnimationDemo name="bounce" />
-  <AnimationDemo name="bounceIn" />
-  <AnimationDemo name="bounceInUp" />
-  <AnimationDemo name="bounceInDown" />
-</div>
-
-<CodeBlock
-  code={`<div data-anim="bounceIn">Bounces in</div>`}
-  lang="html"
-/>
-
-## Attention Seekers
-
-Draw attention to elements already on screen. Great with `data-anim-trigger="hover"`.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-  <AnimationDemo name="shake" />
-  <AnimationDemo name="pulse" />
-  <AnimationDemo name="wobble" />
-  <AnimationDemo name="flip" />
-  <AnimationDemo name="swing" />
-  <AnimationDemo name="rubberBand" />
-</div>
-
-<CodeBlock
-  code={`<button data-anim="shake" data-anim-trigger="hover">
-  Shake on hover
-</button>`}
-  lang="html"
-/>
-
-## Rotate
-
-Rotation-based entrance animations.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-  <AnimationDemo name="rotateIn" />
-  <AnimationDemo name="rotateInDownLeft" />
-  <AnimationDemo name="rotateInDownRight" />
-</div>
-
-<CodeBlock
-  code={`<div data-anim="rotateIn">Rotates in</div>`}
-  lang="html"
-/>
-
-## Special
-
-Unique animations for specific use cases.
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-  <AnimationDemo name="blur" />
-  <AnimationDemo name="clipReveal" />
-  <AnimationDemo name="typewriter" />
-</div>
-
-<CodeBlock
-  code={`<h1 data-anim="typewriter">Hello World</h1>
-<div data-anim="clipReveal">Revealed with clip-path</div>
-<div data-anim="blur">Blurs into focus</div>`}
-  lang="html"
-/>
-
-## Using Animations
+## Usage
 
 Every animation name is passed to the `data-anim` attribute:
 
 <CodeBlock
-  code={`<div data-anim="fadeInUp" data-anim-duration="800ms">
-  This element fades in from below over 800ms
-</div>`}
+  code={'<div\n  data-anim="fadeInUp"\n  data-anim-duration="800ms"\n>\n  This element fades in from below over 800ms\n</div>'}
   lang="html"
 />
 
 See [Attributes](/docs/attributes) for all customization options, or try them in the [Playground](/playground).
+
+<style>{`
+  .anim-explorer {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    min-height: 420px;
+  }
+
+  .anim-preview-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .anim-preview-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    min-height: 340px;
+    overflow: hidden;
+  }
+
+  .anim-preview-box {
+    width: 160px;
+    height: 160px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
+  }
+
+  .anim-preview-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 44px;
+  }
+
+  .anim-current-label {
+    font-family: var(--font-mono) !important;
+    font-size: 15px !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    background: var(--color-accent) !important;
+    color: #fff !important;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+
+  .anim-code-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 44px;
+    background: var(--color-code-bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .anim-code-output {
+    font-family: var(--font-mono) !important;
+    font-size: 13px !important;
+    padding: 8px 14px !important;
+    background: transparent !important;
+    color: var(--color-text-secondary) !important;
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+    line-height: 1.4;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  .anim-copy-btn {
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    border-left: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .anim-copy-btn:hover {
+    color: var(--color-text);
+  }
+
+  .anim-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    max-height: 520px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  .anim-category {
+    margin-bottom: 1rem;
+  }
+
+  .anim-category-title {
+    font-family: var(--font-heading) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 8px !important;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .anim-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 6px 12px;
+    border: none;
+    background: none;
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .anim-btn:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text);
+  }
+
+  .anim-btn.active {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--color-accent-light);
+  }
+
+  @media (max-width: 768px) {
+    .anim-explorer {
+      flex-direction: column-reverse;
+    }
+    .anim-sidebar {
+      width: 100%;
+      max-height: 200px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .anim-category {
+      margin-bottom: 0;
+    }
+    .anim-category-title {
+      width: 100%;
+    }
+    .anim-btn {
+      width: auto;
+      display: inline-block;
+    }
+  }
+`}</style>
+
+<script>{`
+  const target = document.getElementById('anim-target');
+  const label = document.getElementById('anim-current-name');
+  const code = document.getElementById('anim-code-output');
+  const copyBtn = document.getElementById('anim-copy-btn');
+  const btns = document.querySelectorAll('.anim-btn[data-play]');
+  let currentCode = '<div data-anim="fadeInUp">...</div>';
+
+  function playAnim(name) {
+    if (!target) return;
+    target.style.animation = 'none';
+    target.offsetWidth;
+    target.style.animation = 'da-' + name + ' 1s ease both';
+    if (label) label.textContent = name;
+    currentCode = '<div data-anim="' + name + '">...</div>';
+    if (code) code.textContent = currentCode;
+    target.addEventListener('animationend', function() {
+      target.style.animation = '';
+    }, { once: true });
+  }
+
+  btns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      playAnim(btn.getAttribute('data-play'));
+    });
+  });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async function() {
+      await navigator.clipboard.writeText(currentCode);
+      copyBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+      setTimeout(function() {
+        copyBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+      }, 1500);
+    });
+  }
+`}</script>

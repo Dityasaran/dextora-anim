@@ -25,27 +25,18 @@ Add a single script tag to your HTML. That's it.
 
 ### npm
 
-<CodeBlock
-  code={`npm install data-anim`}
-  lang="bash"
-/>
+<CodeBlock code={`npm install data-anim`} lang="bash" />
 
 Then import in your entry file:
 
-<CodeBlock
-  code={`import 'data-anim';`}
-  lang="js"
-  filename="main.js"
-/>
+<CodeBlock code={`import 'data-anim';`} lang="js" filename="main.js" />
 
 ## Your First Animation
 
 It takes just one attribute to animate an element:
 
 <CodeBlock
-  code={`<div data-anim="fadeInUp">
-  Hello, animated world!
-</div>`}
+  code={'<div data-anim="fadeInUp">\n  Hello, animated world!\n</div>'}
   lang="html"
   filename="index.html"
 />
@@ -57,15 +48,7 @@ It takes just one attribute to animate an element:
 By default, animations play when the element enters the viewport. You can change this:
 
 <CodeBlock
-  code={`<!-- Animate on hover -->
-<div data-anim="pulse" data-anim-trigger="hover">
-  Hover me
-</div>
-
-<!-- Animate on click -->
-<button data-anim="bounce" data-anim-trigger="click">
-  Click me
-</button>`}
+  code={'<!-- Animate on hover -->\n<div data-anim="pulse" data-anim-trigger="hover">\n  Hover me\n</div>\n\n<!-- Animate on click -->\n<button data-anim="bounce" data-anim-trigger="click">\n  Click me\n</button>'}
   lang="html"
 />
 
@@ -79,25 +62,16 @@ By default, animations play when the element enters the viewport. You can change
 Control duration, delay, and easing:
 
 <CodeBlock
-  code={`<div
-  data-anim="slideInLeft"
-  data-anim-duration="800ms"
-  data-anim-delay="200ms"
-  data-anim-easing="ease-out"
->
-  Customized animation
-</div>`}
+  code={'<div\n  data-anim="slideInLeft"\n  data-anim-duration="800ms"\n  data-anim-delay="200ms"\n  data-anim-easing="ease-out"\n>\n  Customized animation\n</div>'}
   lang="html"
 />
+
+<AnimationDemo name="slideInLeft" />
 
 ## Run Once or Repeat
 
 <CodeBlock
-  code={`<!-- Only animate once (default) -->
-<div data-anim="fadeIn" data-anim-once="true">Once</div>
-
-<!-- Re-animate every time element enters viewport -->
-<div data-anim="fadeIn" data-anim-once="false">Every time</div>`}
+  code={'<!-- Only animate once (default) -->\n<div data-anim="fadeIn" data-anim-once="true">\n  Once\n</div>\n\n<!-- Re-animate every time element enters viewport -->\n<div data-anim="fadeIn" data-anim-once="false">\n  Every time\n</div>'}
   lang="html"
 />
 

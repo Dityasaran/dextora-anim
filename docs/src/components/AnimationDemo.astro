@@ -6,8 +6,6 @@ interface Props {
 
 const { name, trigger } = Astro.props;
 const id = `demo-${Math.random().toString(36).slice(2, 9)}`;
-const attrs: Record<string, string> = { 'data-anim': name };
-if (trigger) attrs['data-anim-trigger'] = trigger;
 ---
 
 <div class="glass-card p-4 mb-4">
@@ -15,32 +13,35 @@ if (trigger) attrs['data-anim-trigger'] = trigger;
     <code class="text-xs font-mono text-accent">{name}</code>
     {trigger && <span class="text-xs text-text-muted">trigger: {trigger}</span>}
     <button
-      class="replay-btn text-xs px-2 py-1 rounded border border-border text-text-secondary hover:text-text hover:border-border-light transition-colors"
+      class="demo-play-btn text-xs px-3 py-1 rounded border border-border text-text-secondary hover:text-text hover:border-accent hover:bg-accent/10 transition-colors"
       data-target={id}
+      data-anim-name={name}
     >
-      Replay
+      Play
     </button>
   </div>
-  <div class="flex items-center justify-center h-24 rounded-lg bg-bg-surface border border-border">
+  <div class="flex items-center justify-center h-24 rounded-lg bg-bg-surface border border-border overflow-hidden">
     <div
       id={id}
       class="w-16 h-16 rounded-lg bg-gradient-to-br from-accent to-accent-light"
-      {...attrs}
     >
     </div>
   </div>
 </div>
 
 <script>
-  document.querySelectorAll('.replay-btn').forEach((btn) => {
+  document.querySelectorAll('.demo-play-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
+      const animName = btn.getAttribute('data-anim-name');
       const el = document.getElementById(targetId!);
-      if (el) {
-        const animName = el.getAttribute('data-anim');
-        el.removeAttribute('data-anim');
-        el.offsetHeight; // force reflow
-        if (animName) el.setAttribute('data-anim', animName);
+      if (el && animName) {
+        el.style.animation = 'none';
+        el.offsetWidth;
+        el.style.animation = `da-${animName} 1s ease both`;
+        el.addEventListener('animationend', () => {
+          el.style.animation = '';
+        }, { once: true });
       }
     });
   });

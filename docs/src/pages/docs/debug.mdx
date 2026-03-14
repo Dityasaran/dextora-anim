@@ -15,10 +15,7 @@ data-anim includes a debug mode that helps you visualize and troubleshoot animat
 ### Via Configuration
 
 <CodeBlock
-  code={`<script>
-  window.__dataAnim = { debug: true };
-</script>
-<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>`}
+  code={'<script>\n  window.__dataAnim = { debug: true };\n</script>\n<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>'}
   lang="html"
   filename="index.html"
 />
@@ -43,11 +40,7 @@ When debug mode is active, all `[data-anim]` elements receive colored outlines i
 | Blue | Hover/Focus | Element is using hover or focus trigger |
 
 <CodeBlock
-  code={`/* Debug mode adds these outlines automatically */
-[data-anim][data-debug="waiting"]   { outline: 2px dashed red; }
-[data-anim][data-debug="ready"]     { outline: 2px dashed yellow; }
-[data-anim][data-debug="animated"]  { outline: 2px dashed green; }
-[data-anim][data-debug="hover"]     { outline: 2px dashed blue; }`}
+  code={'/* Debug mode adds these outlines automatically */\n[data-anim][data-debug="waiting"]   { outline: 2px dashed red; }\n[data-anim][data-debug="ready"]     { outline: 2px dashed yellow; }\n[data-anim][data-debug="animated"]  { outline: 2px dashed green; }\n[data-anim][data-debug="hover"]     { outline: 2px dashed blue; }'}
   lang="css"
 />
 
@@ -92,10 +85,6 @@ Debug mode logs animation events to the browser console:
 Debug mode should only be used during development. Remove it before deploying:
 
 <CodeBlock
-  code={`<script>
-  window.__dataAnim = {
-    debug: false, // or simply remove this line
-  };
-</script>`}
+  code={'<script>\n  window.__dataAnim = {\n    debug: false, // or simply remove this line\n  };\n</script>'}
   lang="html"
 />

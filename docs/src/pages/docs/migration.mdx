@@ -27,13 +27,7 @@ Switching from AOS (Animate On Scroll) to data-anim is straightforward. The attr
 Remove AOS CSS and JS. Add data-anim.
 
 <CodeBlock
-  code={`<!-- Remove these -->
-<link rel="stylesheet" href="https://unpkg.com/aos@2/dist/aos.css" />
-<script src="https://unpkg.com/aos@2/dist/aos.js"></script>
-<script>AOS.init();</script>
-
-<!-- Add this -->
-<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>`}
+  code={'<!-- Remove these -->\n<link rel="stylesheet" href="https://unpkg.com/aos@2/dist/aos.css" />\n<script src="https://unpkg.com/aos@2/dist/aos.js"></script>\n<script>AOS.init();</script>\n\n<!-- Add this -->\n<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>'}
   lang="html"
 />
 
@@ -82,21 +76,7 @@ The main change is renaming `data-aos` to `data-anim` and updating attribute nam
 ## Step 3: Replace AOS.init() Config
 
 <CodeBlock
-  code={`// AOS config
-AOS.init({
-  duration: 800,
-  easing: 'ease-out-cubic',
-  once: true,
-  offset: 100,
-});
-
-// data-anim equivalent
-window.__dataAnim = {
-  duration: '800ms',
-  easing: 'cubic-bezier(0.33, 1, 0.68, 1)',
-  once: true,
-  offset: 100,
-};`}
+  code={'// AOS config\nAOS.init({\n  duration: 800,\n  easing: \'ease-out-cubic\',\n  once: true,\n  offset: 100,\n});\n\n// data-anim equivalent\nwindow.__dataAnim = {\n  duration: \'800ms\',\n  easing: \'cubic-bezier(0.33, 1, 0.68, 1)\',\n  once: true,\n  offset: 100,\n};'}
   lang="js"
 />
 
@@ -105,17 +85,7 @@ window.__dataAnim = {
 If you added manual CSS to prevent AOS FOUC, you can remove it:
 
 <CodeBlock
-  code={`/* Remove all of this — data-anim handles it automatically */
-[data-aos] {
-  opacity: 0;
-  transition-property: opacity, transform;
-}
-[data-aos].aos-animate {
-  opacity: 1;
-}
-body[data-aos-easing="ease"] [data-aos] {
-  transition-timing-function: ease;
-}`}
+  code={'/* Remove all of this \u2014 data-anim handles it automatically */\n[data-aos] {\n  opacity: 0;\n  transition-property: opacity, transform;\n}\n[data-aos].aos-animate {\n  opacity: 1;\n}\nbody[data-aos-easing="ease"] [data-aos] {\n  transition-timing-function: ease;\n}'}
   lang="css"
 />
 

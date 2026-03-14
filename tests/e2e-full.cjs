@@ -388,6 +388,112 @@ function assert(name, condition, detail) {
   assert('Docs index loads', docsIndex?.status() === 200);
 
   // ============================================
+  // TEST SUITE 4: Docs Content Quality
+  // ============================================
+  console.log('\n🔬 Test Suite 4: Docs Content Quality');
+
+  // Docs index: buttons visible with correct text
+  await page.goto('http://localhost:3333/docs/dist/', { waitUntil: 'networkidle0' });
+  await new Promise((r) => setTimeout(r, 500));
+  const docsButtons = await page.evaluate(() => {
+    const primary = document.querySelector('.btn-primary');
+    const secondary = document.querySelector('.btn-secondary');
+    return {
+      primaryText: primary?.textContent?.trim() || '',
+      secondaryText: secondary?.textContent?.trim() || '',
+      primaryColor: primary ? getComputedStyle(primary).color : '',
+    };
+  });
+  assert('Docs: Get Started button exists', docsButtons.primaryText.includes('Get Started'));
+  assert('Docs: Playground button exists', docsButtons.secondaryText.includes('Playground'));
+
+  // Docs index: showcase cards exist
+  const showcaseCards = await page.evaluate(() => document.querySelectorAll('.showcase-card').length);
+  assert('Docs: Animation showcase cards exist', showcaseCards >= 5, `got ${showcaseCards}`);
+
+  // Docs index: showcase hover triggers animation
+  const showcaseCard = await page.$('.showcase-card');
+  if (showcaseCard) {
+    await showcaseCard.hover();
+    await new Promise((r) => setTimeout(r, 300));
+    const hasAnim = await page.evaluate((el) => {
+      const dots = el.querySelectorAll('[data-gallery-anim]');
+      return Array.from(dots).some((d) => d.style.animation && d.style.animation !== 'none');
+    }, showcaseCard);
+    assert('Docs: Showcase hover animates dots', hasAnim);
+  }
+
+  // Animations page: explorer exists and Play works
+  await page.goto('http://localhost:3333/docs/dist/docs/animations/', { waitUntil: 'networkidle0' });
+  await new Promise((r) => setTimeout(r, 500));
+  const animExplorer = await page.evaluate(() => {
+    const target = document.getElementById('anim-target');
+    const sidebar = document.querySelector('.anim-sidebar');
+    const btns = document.querySelectorAll('.anim-btn[data-play]');
+    return { hasTarget: !!target, hasSidebar: !!sidebar, btnCount: btns.length };
+  });
+  assert('Docs: Animation explorer target exists', animExplorer.hasTarget);
+  assert('Docs: Animation explorer sidebar exists', animExplorer.hasSidebar);
+  assert('Docs: Animation explorer has 30 buttons', animExplorer.btnCount === 30, `got ${animExplorer.btnCount}`);
+
+  // Click a button and check animation plays
+  const bounceBtn = await page.$('.anim-btn[data-play="bounceIn"]');
+  if (bounceBtn) {
+    await bounceBtn.click();
+    await new Promise((r) => setTimeout(r, 100));
+    const animPlaying = await page.evaluate(() => {
+      const el = document.getElementById('anim-target');
+      return el?.style.animation?.includes('da-bounceIn') || false;
+    });
+    assert('Docs: Click bounceIn plays animation', animPlaying);
+    const labelText = await page.evaluate(() => document.getElementById('anim-current-name')?.textContent);
+    assert('Docs: Label updates to bounceIn', labelText === 'bounceIn', `got "${labelText}"`);
+  }
+
+  // Copy button exists
+  const copyBtn = await page.$('#anim-copy-btn');
+  assert('Docs: Animation code copy button exists', !!copyBtn);
+
+  // Code blocks have syntax highlighting (Shiki)
+  const hasShiki = await page.evaluate(() => {
+    const pres = document.querySelectorAll('pre.astro-code');
+    return pres.length > 0;
+  });
+  assert('Docs: Code blocks have Shiki syntax highlighting', hasShiki);
+
+  // Code indentation preserved (check for leading spaces in code output)
+  const codeIndent = await page.evaluate(() => {
+    const codeEl = document.querySelector('pre.astro-code code');
+    if (!codeEl) return false;
+    const text = codeEl.textContent || '';
+    return text.includes('  data-anim=');
+  });
+  assert('Docs: Code indentation preserved', codeIndent);
+
+  // Getting-started: AnimationDemo Play button works
+  await page.goto('http://localhost:3333/docs/dist/docs/getting-started/', { waitUntil: 'networkidle0' });
+  await new Promise((r) => setTimeout(r, 500));
+  const playBtn = await page.$('.demo-play-btn');
+  assert('Docs: Getting-started has Play button', !!playBtn);
+  if (playBtn) {
+    await playBtn.click();
+    await new Promise((r) => setTimeout(r, 100));
+    const targetId = await page.evaluate((btn) => btn.getAttribute('data-target'), playBtn);
+    const animPlays = await page.evaluate((id) => {
+      const el = document.getElementById(id);
+      return el?.style.animation?.includes('da-') || false;
+    }, targetId);
+    assert('Docs: Play button triggers animation', animPlays);
+  }
+
+  // Responsive page loads and has content
+  await page.goto('http://localhost:3333/docs/dist/docs/responsive/', { waitUntil: 'domcontentloaded' });
+  const responsiveContent = await page.evaluate(() => {
+    return document.body.textContent?.includes('data-anim-disable') || false;
+  });
+  assert('Docs: Responsive page has disable content', responsiveContent);
+
+  // ============================================
   // SUMMARY
   // ============================================
   console.log(`\n${'='.repeat(40)}`);

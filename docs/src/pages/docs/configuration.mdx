@@ -16,16 +16,7 @@ While data-anim works with zero configuration, you can customize global defaults
 Set options before the data-anim script loads:
 
 <CodeBlock
-  code={`<script>
-  window.__dataAnim = {
-    duration: '800ms',
-    easing: 'ease-out',
-    once: true,
-    offset: 50,
-    debug: false,
-  };
-</script>
-<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>`}
+  code={'<script>\n  window.__dataAnim = {\n    duration: \'800ms\',\n    easing: \'ease-out\',\n    once: true,\n    offset: 50,\n    debug: false,\n  };\n</script>\n<script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>'}
   lang="html"
   filename="index.html"
 />
@@ -46,17 +37,7 @@ Set options before the data-anim script loads:
 Individual `data-anim-*` attributes always override global config:
 
 <CodeBlock
-  code={`<script>
-  window.__dataAnim = { duration: '800ms', easing: 'ease-out' };
-</script>
-
-<!-- Uses global: 800ms, ease-out -->
-<div data-anim="fadeIn">Default timing</div>
-
-<!-- Overrides to: 400ms, ease-in -->
-<div data-anim="fadeIn" data-anim-duration="400ms" data-anim-easing="ease-in">
-  Custom timing
-</div>`}
+  code={'<script>\n  window.__dataAnim = { duration: \'800ms\', easing: \'ease-out\' };\n</script>\n\n<!-- Uses global: 800ms, ease-out -->\n<div data-anim="fadeIn">Default timing</div>\n\n<!-- Overrides to: 400ms, ease-in -->\n<div data-anim="fadeIn" data-anim-duration="400ms" data-anim-easing="ease-in">\n  Custom timing\n</div>'}
   lang="html"
 />
 
@@ -65,28 +46,20 @@ Individual `data-anim-*` attributes always override global config:
 ### Fast, snappy animations
 
 <CodeBlock
-  code={`window.__dataAnim = {
-  duration: '400ms',
-  easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};`}
+  code={'window.__dataAnim = {\n  duration: \'400ms\',\n  easing: \'cubic-bezier(0.4, 0, 0.2, 1)\',\n};'}
   lang="js"
 />
 
 ### Slow, elegant animations
 
 <CodeBlock
-  code={`window.__dataAnim = {
-  duration: '1200ms',
-  easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-};`}
+  code={'window.__dataAnim = {\n  duration: \'1200ms\',\n  easing: \'cubic-bezier(0.25, 0.46, 0.45, 0.94)\',\n};'}
   lang="js"
 />
 
 ### Disable on mobile globally
 
 <CodeBlock
-  code={`window.__dataAnim = {
-  disableOnMobile: true,
-};`}
+  code={'window.__dataAnim = {\n  disableOnMobile: true,\n};'}
   lang="js"
 />

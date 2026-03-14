@@ -6,6 +6,7 @@ description: Control animations across breakpoints with data-anim responsive att
 
 import CodeBlock from '../../components/CodeBlock.astro';
 import AttributeTable from '../../components/AttributeTable.astro';
+import AnimationDemo from '../../components/AnimationDemo.astro';
 
 # Responsive
 
@@ -20,15 +21,7 @@ Use `data-anim-disable` to turn off animations at specific breakpoints.
 ]} />
 
 <CodeBlock
-  code={`<!-- No animation on mobile -->
-<div data-anim="slideInLeft" data-anim-disable="mobile">
-  This only animates on tablet and desktop
-</div>
-
-<!-- No animation on tablet -->
-<div data-anim="fadeInUp" data-anim-disable="tablet">
-  Skips animation on tablet
-</div>`}
+  code={'<!-- No animation on mobile -->\n<div\n  data-anim="slideInLeft"\n  data-anim-disable="mobile"\n>\n  This only animates on tablet and desktop\n</div>\n\n<!-- No animation on tablet -->\n<div\n  data-anim="fadeInUp"\n  data-anim-disable="tablet"\n>\n  Skips animation on tablet\n</div>'}
   lang="html"
 />
 
@@ -49,10 +42,7 @@ Use `data-anim-mobile` to swap to a different (typically simpler) animation on m
 ]} />
 
 <CodeBlock
-  code={`<!-- Full slide on desktop, simple fade on mobile -->
-<div data-anim="slideInLeft" data-anim-mobile="fadeIn">
-  Responsive animation
-</div>`}
+  code={'<!-- Full slide on desktop, simple fade on mobile -->\n<div\n  data-anim="slideInLeft"\n  data-anim-mobile="fadeIn"\n>\n  Responsive animation\n</div>'}
   lang="html"
 />
 
@@ -61,16 +51,26 @@ This is useful when:
 - Horizontal slide animations don't work well on narrow screens
 - You want a more subtle experience on mobile
 
+## Live Examples
+
+Try resizing your browser to see the difference:
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <AnimationDemo name="slideInLeft" />
+  <AnimationDemo name="fadeIn" />
+</div>
+
+<CodeBlock
+  code={'<!-- Desktop: slide from left / Mobile: simple fade -->\n<div\n  data-anim="slideInLeft"\n  data-anim-mobile="fadeIn"\n>\n  Responsive content\n</div>\n\n<!-- Disable complex animation on mobile entirely -->\n<div\n  data-anim="rotateIn"\n  data-anim-disable="mobile"\n>\n  Desktop-only rotation\n</div>\n\n<!-- Stagger with responsive override -->\n<div data-anim-stagger="100ms">\n  <div data-anim="slideInRight" data-anim-mobile="fadeInUp">\n    Card 1\n  </div>\n  <div data-anim="slideInRight" data-anim-mobile="fadeInUp">\n    Card 2\n  </div>\n  <div data-anim="slideInRight" data-anim-mobile="fadeInUp">\n    Card 3\n  </div>\n</div>'}
+  lang="html"
+/>
+
 ## Best Practices
 
 ### Prefer simpler animations on mobile
 
 <CodeBlock
-  code={`<!-- Good: simpler animation on mobile -->
-<div data-anim="slideInLeft" data-anim-mobile="fadeIn">Content</div>
-
-<!-- Good: disable unnecessary animation -->
-<div data-anim="parallax" data-anim-disable="mobile">Content</div>`}
+  code={'<!-- Good: simpler animation on mobile -->\n<div data-anim="slideInLeft" data-anim-mobile="fadeIn">\n  Content\n</div>\n\n<!-- Good: disable unnecessary animation -->\n<div data-anim="rotateIn" data-anim-disable="mobile">\n  Content\n</div>'}
   lang="html"
 />
 
@@ -78,8 +78,12 @@ This is useful when:
 
 data-anim automatically respects the `prefers-reduced-motion` media query. When the user has requested reduced motion, all animations are disabled system-wide. You don't need to handle this manually.
 
-### Performance on mobile
+### Performance tips
 
-- Horizontal slides (`slideInLeft`, `slideInRight`) can cause horizontal overflow on mobile
-- Zoom animations are GPU-friendly and work well on all devices
-- Fade animations are the most performant choice for mobile
+| Animation type | Mobile performance | Recommendation |
+|---|---|---|
+| `fadeIn`, `fadeInUp` | Excellent | Use freely |
+| `zoomIn`, `zoomOut` | Good | GPU-friendly, works well |
+| `slideInLeft/Right` | Caution | Can cause horizontal overflow |
+| `rotateIn`, `flip` | Caution | Use `data-anim-mobile="fadeIn"` |
+| `bounce`, `wobble` | Good | Multi-step but GPU-friendly |

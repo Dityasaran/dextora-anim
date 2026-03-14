@@ -10,6 +10,7 @@ const categories = [
     desc: 'Smooth opacity transitions with optional directional movement.',
     anims: ['fadeIn', 'fadeInUp', 'fadeInDown', 'fadeInLeft', 'fadeInRight'],
     color: 'from-violet-500 to-indigo-500',
+    shape: 'circle',
     span: 'md:col-span-2',
   },
   {
@@ -17,6 +18,7 @@ const categories = [
     desc: 'Full-width entrance animations from any direction.',
     anims: ['slideInUp', 'slideInDown', 'slideInLeft', 'slideInRight'],
     color: 'from-blue-500 to-cyan-400',
+    shape: 'bars',
     span: '',
   },
   {
@@ -24,6 +26,7 @@ const categories = [
     desc: 'Scale-based entrances for impactful reveals.',
     anims: ['zoomIn', 'zoomOut', 'zoomInUp', 'zoomInDown'],
     color: 'from-emerald-500 to-teal-400',
+    shape: 'grid',
     span: '',
   },
   {
@@ -31,6 +34,7 @@ const categories = [
     desc: 'Playful multi-step animations with overshoot.',
     anims: ['bounce', 'bounceIn', 'bounceInUp', 'bounceInDown'],
     color: 'from-amber-500 to-orange-400',
+    shape: 'pills',
     span: 'md:col-span-2',
   },
   {
@@ -38,6 +42,7 @@ const categories = [
     desc: 'In-place effects for drawing the eye. Perfect for hover and click.',
     anims: ['shake', 'pulse', 'wobble', 'flip', 'swing', 'rubberBand'],
     color: 'from-pink-500 to-rose-400',
+    shape: 'diamond',
     span: 'md:col-span-2',
   },
   {
@@ -45,6 +50,7 @@ const categories = [
     desc: 'Rotation entrances, blur reveals, and more.',
     anims: ['rotateIn', 'blur', 'clipReveal', 'typewriter'],
     color: 'from-fuchsia-500 to-purple-500',
+    shape: 'ring',
     span: '',
   },
 ];
@@ -172,18 +178,66 @@ const categories = [
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {categories.map((cat, i) => (
+        {categories.map((cat) => (
           <div class={`showcase-card glass-card overflow-hidden ${cat.span}`} data-anim="fadeInUp" data-anim-once>
-            <!-- Preview area: large hero dot + smaller satellite dots -->
-            <div class="showcase-preview" data-showcase-color={cat.color}>
-              <div class={`showcase-hero bg-gradient-to-br ${cat.color}`} data-gallery-anim={cat.anims[0]} />
-              <div class="showcase-satellites">
-                {cat.anims.slice(1).map((anim) => (
-                  <div class={`showcase-sat bg-gradient-to-br ${cat.color}`} data-gallery-anim={anim} />
-                ))}
-              </div>
+            <div class="showcase-preview">
+              {/* Circle: large centered circle */}
+              {cat.shape === 'circle' && (
+                <div class="shape-circle-wrap">
+                  <div class={`shape-circle bg-gradient-to-br ${cat.color}`} data-gallery-anim={cat.anims[0]} />
+                  <div class="shape-circle-ring">
+                    {cat.anims.slice(1).map((anim) => (
+                      <div class={`shape-orbit bg-gradient-to-br ${cat.color}`} data-gallery-anim={anim} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* Bars: horizontal bars of varying width */}
+              {cat.shape === 'bars' && (
+                <div class="shape-bars">
+                  {cat.anims.map((anim, j) => (
+                    <div class={`shape-bar bg-gradient-to-r ${cat.color}`} style={`width: ${85 - j * 12}%`} data-gallery-anim={anim} />
+                  ))}
+                </div>
+              )}
+              {/* Grid: 2x2 square grid */}
+              {cat.shape === 'grid' && (
+                <div class="shape-grid">
+                  {cat.anims.map((anim) => (
+                    <div class={`shape-cell bg-gradient-to-br ${cat.color}`} data-gallery-anim={anim} />
+                  ))}
+                </div>
+              )}
+              {/* Pills: rounded pill shapes */}
+              {cat.shape === 'pills' && (
+                <div class="shape-pills">
+                  {cat.anims.map((anim, j) => (
+                    <div class={`shape-pill bg-gradient-to-r ${cat.color}`} style={`height: ${45 + j * 15}px`} data-gallery-anim={anim} />
+                  ))}
+                </div>
+              )}
+              {/* Diamond: rotated squares */}
+              {cat.shape === 'diamond' && (
+                <div class="shape-diamonds">
+                  {cat.anims.map((anim, j) => (
+                    <div class={`shape-diamond bg-gradient-to-br ${cat.color}`} style={`--size: ${36 + (j % 3) * 10}px`} data-gallery-anim={anim} />
+                  ))}
+                </div>
+              )}
+              {/* Ring: circle with ring */}
+              {cat.shape === 'ring' && (
+                <div class="shape-ring-wrap">
+                  <div class={`shape-ring-outer`} style={`border-color: var(--tw-gradient-from, #d946ef)`}>
+                    <div class={`shape-ring-inner bg-gradient-to-br ${cat.color}`} data-gallery-anim={cat.anims[0]} />
+                  </div>
+                  <div class="shape-ring-dots">
+                    {cat.anims.slice(1).map((anim) => (
+                      <div class={`shape-ring-dot bg-gradient-to-br ${cat.color}`} data-gallery-anim={anim} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-            <!-- Info -->
             <div class="p-6">
               <h3 class="text-lg font-heading font-semibold mb-1.5">{cat.name}</h3>
               <p class="text-sm text-text-secondary mb-4">{cat.desc}</p>
@@ -245,7 +299,6 @@ const categories = [
   .showcase-card {
     display: flex;
     flex-direction: column;
-    cursor: pointer;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
   .showcase-card:hover {
@@ -254,36 +307,127 @@ const categories = [
   }
 
   .showcase-preview {
-    padding: 2.5rem 2rem;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    min-height: 180px;
+    min-height: 240px;
     background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
     position: relative;
     overflow: hidden;
   }
 
-  .showcase-hero {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  /* Circle shape */
+  .shape-circle-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
-
-  .showcase-satellites {
+  .shape-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  }
+  .shape-circle-ring {
     display: flex;
     gap: 8px;
-    justify-content: center;
   }
-
-  .showcase-sat {
+  .shape-orbit {
     width: 28px;
     height: 28px;
-    border-radius: 8px;
-    opacity: 0.6;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  /* Bars shape */
+  .shape-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    max-width: 200px;
+  }
+  .shape-bar {
+    height: 18px;
+    border-radius: 9px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  /* Grid shape */
+  .shape-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: fit-content;
+  }
+  .shape-cell {
+    width: 68px;
+    height: 68px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  /* Pills shape */
+  .shape-pills {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .shape-pill {
+    width: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  /* Diamond shape */
+  .shape-diamonds {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .shape-diamond {
+    width: var(--size);
+    height: var(--size);
+    border-radius: 6px;
+    transform: rotate(45deg);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  /* Ring shape */
+  .shape-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .shape-ring-outer {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 5px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+  }
+  .shape-ring-inner {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+  }
+  .shape-ring-dots {
+    display: flex;
+    gap: 8px;
+  }
+  .shape-ring-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    opacity: 0.5;
   }
 
   .showcase-tag {

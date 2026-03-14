@@ -16,30 +16,18 @@ data-anim supports four trigger types that control when an animation plays. Set 
 The animation plays when the element scrolls into the viewport. This is the default behavior.
 
 <CodeBlock
-  code={`<!-- These are equivalent -->
-<div data-anim="fadeInUp">Viewport trigger (implicit)</div>
-<div data-anim="fadeInUp" data-anim-trigger="viewport">Viewport trigger (explicit)</div>`}
+  code={'<!-- These are equivalent -->\n<div data-anim="fadeInUp">\n  Viewport trigger (implicit)\n</div>\n\n<div data-anim="fadeInUp" data-anim-trigger="viewport">\n  Viewport trigger (explicit)\n</div>'}
   lang="html"
 />
 
-<AnimationDemo name="fadeInUp" trigger="viewport" />
-
-### State Transitions
-
-```
-Hidden (below viewport) → Enters viewport → Animation plays → Visible
-                                                              ↓
-                                          (if once="false") Leaves viewport → Hidden again
-```
+<AnimationDemo name="fadeInUp" />
 
 ### Offset
 
-Use `data-anim-offset` to control how many pixels into the viewport the element must be before triggering:
+Use `data-anim-offset` to control how far into the viewport the element must be before triggering:
 
 <CodeBlock
-  code={`<div data-anim="fadeIn" data-anim-offset="200">
-  Triggers 200px after entering viewport
-</div>`}
+  code={'<div\n  data-anim="fadeIn"\n  data-anim-offset="200"\n>\n  Triggers 200px after entering viewport\n</div>'}
   lang="html"
 />
 
@@ -48,15 +36,11 @@ Use `data-anim-offset` to control how many pixels into the viewport the element 
 Animation plays when the user hovers over the element. Great for interactive UI elements.
 
 <CodeBlock
-  code={`<div data-anim="pulse" data-anim-trigger="hover">
-  Hover over me
-</div>`}
+  code={'<div data-anim="pulse" data-anim-trigger="hover">\n  Hover over me\n</div>'}
   lang="html"
 />
 
 <AnimationDemo name="pulse" trigger="hover" />
-
-### Accessibility
 
 Hover animations also respond to `focus-visible` for keyboard users, ensuring accessibility without extra work.
 
@@ -65,33 +49,18 @@ Hover animations also respond to `focus-visible` for keyboard users, ensuring ac
 Animation plays when the user clicks the element.
 
 <CodeBlock
-  code={`<button data-anim="bounce" data-anim-trigger="click">
-  Click me to bounce
-</button>`}
+  code={'<button data-anim="bounce" data-anim-trigger="click">\n  Click me to bounce\n</button>'}
   lang="html"
 />
 
 <AnimationDemo name="bounce" trigger="click" />
-
-### State Transitions
-
-```
-Idle → Click → Animation plays → Returns to idle
-                                  ↓
-                     (if once="true") Stays in final state
-```
 
 ## Focus
 
 Animation plays when the element receives focus. Ideal for form inputs.
 
 <CodeBlock
-  code={`<input
-  type="text"
-  data-anim="pulse"
-  data-anim-trigger="focus"
-  placeholder="Focus me"
-/>`}
+  code={'<input\n  type="text"\n  data-anim="pulse"\n  data-anim-trigger="focus"\n  placeholder="Focus me"\n/>'}
   lang="html"
 />
 
@@ -99,7 +68,7 @@ Animation plays when the element receives focus. Ideal for form inputs.
 
 ### Accessibility Notes
 
-- The focus trigger works with both mouse focus and keyboard focus (`Tab` key)
+- Works with both mouse focus and keyboard focus (`Tab` key)
 - Animations respect `prefers-reduced-motion` media query
 - Use subtle animations (like `pulse` or `shake`) for focus rather than large movements
 
@@ -108,12 +77,7 @@ Animation plays when the element receives focus. Ideal for form inputs.
 Each element can only have one trigger. If you need multiple interactions, wrap the element:
 
 <CodeBlock
-  code={`<!-- Viewport trigger for entrance, hover for interaction -->
-<div data-anim="fadeInUp" data-anim-trigger="viewport">
-  <button data-anim="pulse" data-anim-trigger="hover">
-    Interactive button
-  </button>
-</div>`}
+  code={'<!-- Viewport trigger for entrance, hover for interaction -->\n<div data-anim="fadeInUp" data-anim-trigger="viewport">\n  <button data-anim="pulse" data-anim-trigger="hover">\n    Interactive button\n  </button>\n</div>'}
   lang="html"
 />
 

@@ -36,15 +36,7 @@ data-anim:
 data-anim loads as a synchronous `<script>` tag in the `<head>`, not `async` or `defer`. This ensures the CSS is injected before the browser renders any content.
 
 <CodeBlock
-  code={`<!-- Correct: synchronous in <head> -->
-<head>
-  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>
-</head>
-
-<!-- Wrong: async/defer causes FOUC -->
-<head>
-  <script async src="data-anim.js"></script>
-</head>`}
+  code={'<!-- Correct: synchronous in <head> -->\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n\n<!-- Wrong: async/defer causes FOUC -->\n<head>\n  <script async src="data-anim.js"></script>\n</head>'}
   lang="html"
 />
 
@@ -97,16 +89,7 @@ data-anim's script is tiny (under 2KB), so the blocking time is negligible — t
 AOS users typically need manual CSS to prevent FOUC:
 
 <CodeBlock
-  code={`/* Manual FOUC fix for AOS */
-[data-aos] {
-  opacity: 0;
-  transition-property: opacity, transform;
-}
-[data-aos].aos-animate {
-  opacity: 1;
-}
-
-/* But this still flashes if CSS loads after HTML */`}
+  code={'/* Manual FOUC fix for AOS */\n[data-aos] {\n  opacity: 0;\n  transition-property: opacity, transform;\n}\n[data-aos].aos-animate {\n  opacity: 1;\n}\n\n/* But this still flashes if CSS loads after HTML */'}
   lang="css"
 />
 
