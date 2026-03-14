@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://ryo-manba.github.io/data-anim/">
-    <img src="https://ryo-manba.github.io/data-anim/og-image.png" alt="data-anim — Animate with just HTML" width="600" />
+    <img src="https://ryo-manba.github.io/data-anim/og-image.png" alt="data-anim — Animate with just HTML" width="100%" />
   </a>
   <h1>data-anim</h1>
 
