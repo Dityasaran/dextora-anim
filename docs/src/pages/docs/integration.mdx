@@ -10,6 +10,17 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
 data-anim works with any HTML-based project. Since it uses HTML attributes and injects its own CSS, there's nothing framework-specific to configure.
 
+## Table of Contents
+
+- [Static HTML](#static-html)
+- [React (Vite)](#react-vite)
+- [Next.js](#nextjs)
+- [Astro](#astro)
+- [Hugo](#hugo)
+- [WordPress](#wordpress)
+- [HTMX](#htmx)
+- [Turbo (Hotwire)](#turbo-hotwire)
+
 ## Static HTML
 
 The simplest integration. Add the script tag and start using attributes.
@@ -18,57 +29,6 @@ The simplest integration. Add the script tag and start using attributes.
   code={'<!DOCTYPE html>\n<html>\n<head>\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  <h1 data-anim="fadeInUp">Hello World</h1>\n  <p data-anim="fadeInUp" data-anim-delay="200ms">\n    Welcome to my site.\n  </p>\n</body>\n</html>'}
   lang="html"
   filename="index.html"
-/>
-
-## WordPress
-
-Add the script to your theme's `header.php` or use a plugin to inject it in the `<head>`.
-
-<CodeBlock
-  code={'// functions.php\nfunction enqueue_data_anim() {\n  wp_enqueue_script(\n    \'data-anim\',\n    \'https://unpkg.com/data-anim@latest/dist/data-anim.js\',\n    array(),\n    null,\n    false // Load in <head>, not footer\n  );\n}\nadd_action(\'wp_enqueue_scripts\', \'enqueue_data_anim\');'}
-  lang="php"
-  filename="functions.php"
-/>
-
-Then use attributes in your templates or the block editor (Custom HTML block):
-
-<CodeBlock
-  code={'<div data-anim="fadeInUp" class="wp-block-group">\n  <h2>Section Title</h2>\n  <p>Section content goes here.</p>\n</div>'}
-  lang="html"
-/>
-
-## Hugo
-
-Add the script to your base template's `<head>`:
-
-<CodeBlock
-  code={'<!-- layouts/_default/baseof.html -->\n<!DOCTYPE html>\n<html>\n<head>\n  {{ partial "head.html" . }}\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  {{ block "main" . }}{{ end }}\n</body>\n</html>'}
-  lang="html"
-  filename="layouts/_default/baseof.html"
-/>
-
-Use in your Markdown with raw HTML:
-
-<CodeBlock
-  code={'<!-- content/posts/my-post.md -->\n<div data-anim="fadeInUp">\n\n## My Animated Section\n\nThis content will fade in when scrolled into view.\n\n</div>'}
-  lang="markdown"
-/>
-
-## Astro
-
-Add to your base layout:
-
-<CodeBlock
-  code={'---\n// src/layouts/Layout.astro\n---\n<html>\n  <head>\n    <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n  </head>\n  <body>\n    <slot />\n  </body>\n</html>'}
-  lang="astro"
-  filename="src/layouts/Layout.astro"
-/>
-
-Use in any `.astro` or `.mdx` page:
-
-<CodeBlock
-  code={'<section data-anim-stagger="100ms">\n  <h1 data-anim="fadeInUp">Welcome</h1>\n  <p data-anim="fadeInUp">Built with Astro + data-anim</p>\n</section>'}
-  lang="astro"
 />
 
 ## React (Vite)
@@ -129,6 +89,57 @@ Then use attributes in any Server or Client Component:
   code={'// app/page.tsx\nexport default function Home() {\n  return (\n    <main>\n      <h1 data-anim="fadeInUp">Welcome</h1>\n      <p data-anim="fadeInUp" data-anim-delay="200">\n        Built with Next.js + data-anim\n      </p>\n    </main>\n  );\n}'}
   lang="tsx"
   filename="app/page.tsx"
+/>
+
+## Astro
+
+Add to your base layout:
+
+<CodeBlock
+  code={'---\n// src/layouts/Layout.astro\n---\n<html>\n  <head>\n    <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n  </head>\n  <body>\n    <slot />\n  </body>\n</html>'}
+  lang="astro"
+  filename="src/layouts/Layout.astro"
+/>
+
+Use in any `.astro` or `.mdx` page:
+
+<CodeBlock
+  code={'<section data-anim-stagger="100ms">\n  <h1 data-anim="fadeInUp">Welcome</h1>\n  <p data-anim="fadeInUp">Built with Astro + data-anim</p>\n</section>'}
+  lang="astro"
+/>
+
+## Hugo
+
+Add the script to your base template's `<head>`:
+
+<CodeBlock
+  code={'<!-- layouts/_default/baseof.html -->\n<!DOCTYPE html>\n<html>\n<head>\n  {{ partial "head.html" . }}\n  <script src="https://unpkg.com/data-anim@latest/dist/data-anim.js"></script>\n</head>\n<body>\n  {{ block "main" . }}{{ end }}\n</body>\n</html>'}
+  lang="html"
+  filename="layouts/_default/baseof.html"
+/>
+
+Use in your Markdown with raw HTML:
+
+<CodeBlock
+  code={'<!-- content/posts/my-post.md -->\n<div data-anim="fadeInUp">\n\n## My Animated Section\n\nThis content will fade in when scrolled into view.\n\n</div>'}
+  lang="markdown"
+/>
+
+## WordPress
+
+Add the script to your theme's `header.php` or use a plugin to inject it in the `<head>`.
+
+<CodeBlock
+  code={'// functions.php\nfunction enqueue_data_anim() {\n  wp_enqueue_script(\n    \'data-anim\',\n    \'https://unpkg.com/data-anim@latest/dist/data-anim.js\',\n    array(),\n    null,\n    false // Load in <head>, not footer\n  );\n}\nadd_action(\'wp_enqueue_scripts\', \'enqueue_data_anim\');'}
+  lang="php"
+  filename="functions.php"
+/>
+
+Then use attributes in your templates or the block editor (Custom HTML block):
+
+<CodeBlock
+  code={'<div data-anim="fadeInUp" class="wp-block-group">\n  <h2>Section Title</h2>\n  <p>Section content goes here.</p>\n</div>'}
+  lang="html"
 />
 
 ## HTMX
