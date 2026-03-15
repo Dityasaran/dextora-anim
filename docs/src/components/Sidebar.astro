@@ -54,9 +54,12 @@ function isSectionActive(links: { href: string }[]): boolean {
 <aside id="mobile-sidebar" class="lg:hidden fixed top-16 left-0 bottom-0 z-40 w-[280px] bg-bg border-r border-border -translate-x-full transition-transform duration-200 overflow-y-auto">
   <nav class="p-4 pb-8">
     {sections.map((section) => (
-      <details open={isSectionActive(section.links) || true} class="mb-4">
-        <summary class="text-sm font-semibold uppercase tracking-wider text-text-secondary mb-2 py-1">
+      <details open={isSectionActive(section.links) || true} class="sidebar-section mb-4">
+        <summary class="flex items-center justify-between text-sm font-semibold uppercase tracking-wider text-text-secondary mb-2 py-1 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
           {section.title}
+          <svg class="sidebar-chevron w-4 h-4 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
         </summary>
         <ul class="space-y-1 ml-3">
           {section.links.map((link) => (
@@ -84,9 +87,12 @@ function isSectionActive(links: { href: string }[]): boolean {
 <aside class="w-[260px] shrink-0 hidden lg:block">
   <nav class="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] pb-8 pr-4">
     {sections.map((section) => (
-      <details open={isSectionActive(section.links) || true} class="mb-4">
-        <summary class="text-sm font-semibold uppercase tracking-wider text-text-secondary mb-2 py-1">
+      <details open={isSectionActive(section.links) || true} class="sidebar-section mb-4">
+        <summary class="flex items-center justify-between text-sm font-semibold uppercase tracking-wider text-text-secondary mb-2 py-1 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
           {section.title}
+          <svg class="sidebar-chevron w-4 h-4 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
         </summary>
         <ul class="space-y-1 ml-3">
           {section.links.map((link) => (
@@ -109,6 +115,12 @@ function isSectionActive(links: { href: string }[]): boolean {
     ))}
   </nav>
 </aside>
+
+<style>
+  .sidebar-section[open] > summary > .sidebar-chevron {
+    transform: rotate(90deg);
+  }
+</style>
 
 <script>
   function initSidebar() {
