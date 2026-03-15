@@ -85,8 +85,7 @@ code {
 .glass-card {
   border-radius: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
-  background-color: color-mix(in srgb, var(--color-bg-card) 80%, transparent);
-  backdrop-filter: blur(4px);
+  background-color: var(--color-bg-card);
 }
 
 /* ========== Prose (docs) ========== */
