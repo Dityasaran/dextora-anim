@@ -104,9 +104,3 @@ declare global {
     interface HTMLAttributes<T> extends DataAnimAttributes {}
   }
 }
-
-// Vue template support
-declare module 'vue' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface HTMLAttributes extends DataAnimAttributes {}
-}

@@ -1,0 +1,27 @@
+{
+  "name": "data-anim-inspector",
+  "version": "1.0.0",
+  "description": "Click any element on a website and try data-anim animations. Available as a script tag or Chrome extension.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vite build && vite build --config vite.config.extension.ts",
+    "build:script": "vite build",
+    "build:extension": "vite build --config vite.config.extension.ts",
+    "dev": "vite build --watch",
+    "test": "cd ../.. && pnpm vitest run tests/unit/inspector"
+  },
+  "keywords": [
+    "data-anim",
+    "animation",
+    "inspector",
+    "chrome-extension",
+    "devtools"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.27.0",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}
