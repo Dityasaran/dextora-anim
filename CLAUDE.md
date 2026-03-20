@@ -1,9 +1,9 @@
 # data-anim
 
-HTMLの属性だけでアニメーションを追加できるライブラリ。
+A library for adding animations using only HTML attributes.
 
 ## i18n
 
-- docs のページを追加・編集・削除したら、必ず英語 (`src/pages/`) と日本語 (`src/pages/ja/`) を同時に更新すること。
-- UIテキストは `src/i18n/translations.ts` で管理。
-- `cd docs && npm run i18n-check` で同期チェック。
+- When adding, editing, or deleting docs pages, always update both English (`src/pages/`) and Japanese (`src/pages/ja/`) simultaneously.
+- UI text is managed in `src/i18n/translations.ts`.
+- Run `cd docs && npm run i18n-check` to verify sync.
