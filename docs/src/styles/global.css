@@ -13,8 +13,8 @@
   --color-accent-dim: #4f46e5;      /* decorative only, not for text */
 
   --color-text: #f0f0f8;            /* 15.85:1 on card ✅ AAA */
-  --color-text-secondary: #b0b0c8;  /* 8.46:1 on card ✅ AAA */
-  --color-text-muted: #8888a8;      /* 5.25:1 on card ✅ AA */
+  --color-text-secondary: #e8e8f0;  /* 14.20:1 on card ✅ AAA */
+  --color-text-muted: #9e9ebb;      /* 6.88:1 on card ✅ AA */
 
   --color-code-bg: #1a1a2e;
 
@@ -116,7 +116,7 @@ code {
 .prose-docs ul, .prose-docs ol {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--color-text-secondary);
 }
 
