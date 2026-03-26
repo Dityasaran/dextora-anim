@@ -39,6 +39,10 @@ import 'data-anim';
 - Visit the [Documentation](https://ryo-manba.github.io/data-anim/) to view the full API reference.
 - Try the [Playground](https://ryo-manba.github.io/data-anim/playground/) to experiment with animations interactively.
 
+## data-anim Inspector
+
+[data-anim Inspector](https://chromewebstore.google.com/detail/data-anim-inspector/cocpaadjbnbeakonflehnoefjlkhpnmb) — Chrome extension for browsing and previewing animations in the browser.
+
 ## Documentation
 
 Visit [https://ryo-manba.github.io/data-anim/](https://ryo-manba.github.io/data-anim/) to view the full documentation.
