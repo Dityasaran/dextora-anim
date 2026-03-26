@@ -1,7 +1,7 @@
 {
   "name": "data-anim-inspector",
   "version": "1.0.0",
-  "description": "Click any element on a website and try data-anim animations. Available as a script tag or Chrome extension.",
+  "description": "Chrome extension for browsing and previewing data-anim animations in the browser.",
   "type": "module",
   "private": true,
   "scripts": {
