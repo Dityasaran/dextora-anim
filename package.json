@@ -1,6 +1,6 @@
 {
   "name": "dextora-anim",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Animate with just HTML — a Dextora open source tool.",
   "type": "module",
   "packageManager": "pnpm@10.11.0",
