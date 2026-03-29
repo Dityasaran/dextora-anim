@@ -1,18 +1,24 @@
 <div align="center">
-  <a href="https://ryo-manba.github.io/data-anim/">
-    <img src="https://ryo-manba.github.io/data-anim/og-image.png" alt="data-anim — Animate with just HTML" width="100%" />
-  </a>
-  <h1>data-anim</h1>
+  <h1>dextora-anim by Dextora</h1>
+  <p><strong>Animate with just HTML — a Dextora open source tool</strong></p>
 
-<a href="https://www.npmjs.com/package/data-anim"><img alt="NPM version" src="https://img.shields.io/npm/v/data-anim.svg?style=for-the-badge&labelColor=000000"></a>
-<a href="https://bundlephobia.com/package/data-anim"><img alt="gzip size" src="https://img.shields.io/bundlephobia/minzip/data-anim?style=for-the-badge&labelColor=000000&label=gzip"></a>
-<a href="https://github.com/ryo-manba/data-anim/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/data-anim.svg?style=for-the-badge&labelColor=000000"></a>
+[![npm version](https://img.shields.io/npm/v/data-anim.svg?style=for-the-badge&labelColor=000000&color=4F8EF7)](https://www.npmjs.com/package/data-anim)
+[![gzip size](https://img.shields.io/bundlephobia/minzip/data-anim?style=for-the-badge&labelColor=000000&label=gzip&color=4F8EF7)](https://bundlephobia.com/package/data-anim)
+[![License](https://img.shields.io/npm/l/data-anim.svg?style=for-the-badge&labelColor=000000&color=4F8EF7)](https://github.com/Dityasaran/dextora-dextora-anim/blob/main/LICENSE)
 
 </div>
 
+## About
+
+**dextora-anim** is a drop-in scroll animation library by [Dextora](https://github.com/Dityasaran). Add a `<script>` tag, write data attributes, and your HTML comes alive. Under 3KB gzipped with 30+ animations, 4 triggers, and built-in anti-FOUC protection.
+
 ## Getting Started
 
-Add a script tag. Write attributes. Your HTML comes alive. Under 3KB gzipped with 30+ animations, 4 triggers, and built-in anti-FOUC protection.
+### CDN (Recommended)
+
+```html
+<script src="https://unpkg.com/data-anim/dist/data-anim.min.js"></script>
+```
 
 ### npm
 
@@ -24,33 +30,39 @@ npm install data-anim
 import 'data-anim';
 ```
 
-### CDN
-
-```html
-<script src="https://unpkg.com/data-anim/dist/data-anim.min.js"></script>
-```
-
 ### Usage
 
 ```html
-<h1 data-anim="fadeInUp">Hello World</h1>
+<h1 data-anim="fadeInUp">Hello from Dextora</h1>
+<div data-anim="zoomIn" data-anim-delay="200">Smooth entrance</div>
+<p data-anim="slideInRight" data-anim-duration="600">Slide right in</p>
 ```
 
-- Visit the [Documentation](https://ryo-manba.github.io/data-anim/) to view the full API reference.
-- Try the [Playground](https://ryo-manba.github.io/data-anim/playground/) to experiment with animations interactively.
+## Animation Library
 
-## Chrome Extension
+| Category   | Animations |
+|------------|------------|
+| Fade       | fadeIn, fadeInUp, fadeInDown, fadeInLeft, fadeInRight |
+| Zoom       | zoomIn, zoomInUp, zoomInDown, zoomInLeft, zoomInRight |
+| Slide      | slideInUp, slideInDown, slideInLeft, slideInRight |
+| Bounce     | bounceIn, bounceInUp, bounceInDown, bounceInLeft, bounceInRight |
+| Flip       | flipX, flipY |
+| Attention  | pulse, shake, wobble, swing |
+| Special    | lightSpeedIn, rollIn, jackInTheBox |
 
-[data-anim Inspector](https://chromewebstore.google.com/detail/data-anim-inspector/cocpaadjbnbeakonflehnoefjlkhpnmb) — Chrome extension for browsing and previewing animations in the browser.
+## Features
 
-## Documentation
-
-Visit [https://ryo-manba.github.io/data-anim/](https://ryo-manba.github.io/data-anim/) to view the full documentation.
+- ⚡ **Zero dependencies** — pure vanilla JS
+- 📦 **Under 3KB gzipped** — no bloat
+- 🎨 **30+ animations** — all via data attributes
+- 🔁 **4 trigger modes** — scroll, hover, click, load
+- 🛡️ **Anti-FOUC** — elements stay hidden until the library loads
+- ✅ **No build step** — just drop in a `<script>` tag
 
 ## Contributing
 
-Contributions to data-anim are welcome and highly appreciated. Please review our [Contribution Guidelines](CONTRIBUTING.md) before getting started.
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a PR.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © 2025 Dextora

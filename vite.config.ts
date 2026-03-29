@@ -9,13 +9,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'dataAnim',
+      name: 'dextoraAnim',
       formats: ['es', 'umd', 'iife'],
       fileName: (format) => {
-        if (format === 'es') return 'data-anim.esm.js';
-        if (format === 'umd') return 'data-anim.js';
-        if (format === 'iife') return 'data-anim.min.js';
-        return `data-anim.${format}.js`;
+        if (format === 'es') return 'dextora-anim.esm.js';
+        if (format === 'umd') return 'dextora-anim.js';
+        if (format === 'iife') return 'dextora-anim.min.js';
+        return `dextora-anim.${format}.js`;
       },
     },
     outDir: 'dist',

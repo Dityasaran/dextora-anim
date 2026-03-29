@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dextora-anim — Motion without the mess.</title>
+  <meta name="description" content="dextora-anim adds scroll animations to any element with a single data attribute. Under 3KB. Zero dependencies. A Dextora open source tool." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Library -->
+  <script src="https://unpkg.com/data-anim/dist/data-anim.min.js"></script>
+
+  <style>
+    /* ─── Tokens ─────────────────────────────────────────── */
+    :root {
+      --white:      #FFFFFF;
+      --off-white:  #FAF9F7;
+      --rule:       #E8E8E8;
+      --charcoal:   #1A1A1A;
+      --body:       #4A4A4A;
+      --muted:      #8A8A8A;
+      --red:        #E8400C;
+      --red-light:  #FEF0EB;
+      --mono-red:   #C73509;
+      --card-border: #E8E8E8;
+    }
+
+    /* ─── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Utility ────────────────────────────────────────── */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ─── Buttons ────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: opacity 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-fill {
+      background: var(--red);
+      color: #fff;
+      border: 1.5px solid var(--red);
+    }
+    .btn-fill:hover { opacity: 0.88; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+    }
+    .btn-outline:hover { background: var(--red-light); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid var(--rule);
+    }
+    .btn-ghost:hover { color: var(--charcoal); border-color: #ccc; }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  NAVBAR                                                 */
+    /* ═══════════════════════════════════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: var(--charcoal); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  HERO                                                   */
+    /* ═══════════════════════════════════════════════════════ */
+    .hero {
+      padding: 100px 0 88px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--red);
+    }
+
+    .hero-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(48px, 6vw, 72px);
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--body);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 52px;
+    }
+
+    /* Code block */
+    .hero-code {
+      background: #F5F5F5;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 0;
+      max-width: 480px;
+      overflow: hidden;
+    }
+
+    .hero-code-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 16px;
+      background: #EFEFEF;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-code-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .hero-code-dots span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .dot-r { background: #FF5F57; }
+    .dot-y { background: #FEBC2E; }
+    .dot-g { background: #28C840; }
+
+    .hero-code-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .hero-code pre {
+      padding: 18px 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--charcoal);
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .c-tag  { color: #005CC5; }
+    .c-attr { color: #6F42C1; }
+    .c-val  { color: #032F62; }
+    .c-str  { color: var(--mono-red); }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  STATS BAR                                              */
+    /* ═══════════════════════════════════════════════════════ */
+    .stats-bar {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--rule);
+      padding: 40px 0;
+    }
+
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 10%; bottom: 10%;
+      width: 1px;
+      background: var(--rule);
+    }
+
+    .stat-number {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.03em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  SECTION SHARED                                         */
+    /* ═══════════════════════════════════════════════════════ */
+    section.padded {
+      padding: 96px 0;
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: var(--red);
+    }
+
+    .section-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--body);
+      line-height: 1.65;
+      max-width: 480px;
+    }
+
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  DEMO CARDS                                             */
+    /* ═══════════════════════════════════════════════════════ */
+    .demo-section {
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .demo-card {
+      background: var(--white);
+      padding: 40px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-height: 240px;
+      position: relative;
+    }
+
+    .demo-anim-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 0;
+    }
+
+    /* The animated element inside each card */
+    .demo-block {
+      width: 64px;
+      height: 12px;
+      background: var(--charcoal);
+      border-radius: 2px;
+    }
+    .demo-block--wide {
+      width: 100px;
+      height: 12px;
+    }
+    .demo-block--circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+    .demo-block--card {
+      width: 88px;
+      height: 52px;
+      border-radius: 4px;
+      border: 1.5px solid var(--charcoal);
+      background: transparent;
+    }
+
+    .demo-card-footer {
+      border-top: 1px solid var(--rule);
+      padding-top: 16px;
+    }
+
+    .demo-anim-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--mono-red);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .demo-anim-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  HOW IT WORKS                                           */
+    /* ═══════════════════════════════════════════════════════ */
+    .how-section {
+      background: var(--off-white);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(33.33% + 12px);
+      right: calc(33.33% + 12px);
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .step {
+      position: relative;
+    }
+
+    .step-number {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 3.4rem;
+      font-weight: 700;
+      color: #E8C4B0;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .step-desc {
+      font-size: 0.9rem;
+      color: var(--body);
+      line-height: 1.65;
+    }
+
+    .step-code {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 10px;
+      background: #EEE;
+      border-radius: 3px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--charcoal);
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  INSTALL STRIP                                          */
+    /* ═══════════════════════════════════════════════════════ */
+    .install-strip {
+      background: var(--charcoal);
+      padding: 64px 0;
+    }
+
+    .install-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .install-copy h2 {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .install-copy p {
+      font-size: 0.9rem;
+      color: #999;
+      line-height: 1.65;
+    }
+
+    .install-code-block {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .install-code-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid #2A2A2A;
+    }
+
+    .install-code-bar span {
+      font-size: 0.72rem;
+      color: #666;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .copy-btn-dark {
+      background: #2A2A2A;
+      border: none;
+      border-radius: 3px;
+      color: #888;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.7rem;
+      padding: 3px 9px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .copy-btn-dark:hover { color: #fff; }
+
+    .install-code-block pre {
+      padding: 20px 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.825rem;
+      line-height: 1.75;
+      color: #E0E0E0;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .i-comment { color: #555; }
+    .i-tag     { color: #79B8FF; }
+    .i-attr    { color: #B392F0; }
+    .i-val     { color: #9ECBFF; }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  FOOTER                                                 */
+    /* ═══════════════════════════════════════════════════════ */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--rule);
+      padding: 32px 0;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+    }
+
+    .footer-center {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .footer-center a {
+      color: var(--body);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-right {
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ─── Toast ──────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--charcoal);
+      color: #fff;
+      font-size: 0.825rem;
+      padding: 10px 18px;
+      border-radius: 4px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .demo-grid        { grid-template-columns: 1fr 1fr; }
+      .steps-grid       { grid-template-columns: 1fr; gap: 36px; }
+      .steps-grid::before { display: none; }
+      .install-inner    { grid-template-columns: 1fr; }
+      .footer-inner     { grid-template-columns: 1fr; text-align: center; }
+      .footer-center, .footer-right { text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .demo-grid        { grid-template-columns: 1fr; }
+      .stats-inner      { grid-template-columns: 1fr; gap: 24px; }
+      .stat-item + .stat-item::before { display: none; }
+      .nav-links        { display: none; }
+      .hero             { padding: 64px 0 56px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  NAVBAR                              ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo" id="site-logo">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="26" height="26" rx="8" fill="#E8400C"/>
+        <text x="7" y="19" font-family="'Instrument Sans', sans-serif" font-weight="700" font-size="14" fill="white">D</text>
+      </svg>
+      Dextora
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#demo" id="nav-demos">Demo</a></li>
+      <li><a href="playground.html" id="nav-playground">Playground</a></li>
+      <li><a href="https://github.com/Dityasaran/dextora-dextora-anim" target="_blank" id="nav-github">GitHub</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://github.com/Dityasaran/dextora-dextora-anim" target="_blank" class="btn btn-ghost" id="nav-github-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="#install" class="btn btn-fill" id="nav-get-started">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  HERO                                ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">dextora-anim — open source</div>
+
+    <h1 class="hero-title">Animate HTML.<br>Ship faster.</h1>
+
+    <p class="hero-sub">dextora-anim adds scroll animations to any element with a single data attribute. Under 3KB. Zero dependencies.</p>
+
+    <div class="hero-actions">
+      <a href="https://github.com/Dityasaran/dextora-dextora-anim" target="_blank" class="btn btn-fill" id="hero-github">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+      <a href="playground.html" class="btn btn-outline" id="hero-examples">Try Playground</a>
+    </div>
+
+    <!-- Code block -->
+    <div class="hero-code" id="hero-code">
+      <div class="hero-code-bar">
+        <div class="hero-code-dots">
+          <span class="dot-r"></span>
+          <span class="dot-y"></span>
+          <span class="dot-g"></span>
+        </div>
+        <span class="hero-code-label">index.html</span>
+        <button onclick="copyHero()" style="background:none;border:none;cursor:pointer;font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);" id="copy-hero-btn">copy</button>
+      </div>
+      <pre><span class="c-comment" style="color:#999;font-style:italic"><!-- 1. Add the script once --></span>
+<span class="c-tag">&lt;script</span> <span class="c-attr">src</span>=<span class="c-val">"https://unpkg.com/data-anim/dist/data-anim.min.js"</span><span class="c-tag">&gt;&lt;/script&gt;</span>
+
+<span class="c-comment" style="color:#999;font-style:italic"><!-- 2. Animate anything with a data attribute --></span>
+<span class="c-tag">&lt;h1</span> <span class="c-attr">data-anim</span>=<span class="c-val">"fadeInUp"</span><span class="c-tag">&gt;</span>Hello Dextora<span class="c-tag">&lt;/h1&gt;</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  STATS BAR                           ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item" data-anim="fadeInUp" data-anim-delay="0">
+        <span class="stat-number">Under 3KB</span>
+        <span class="stat-label">gzipped, no build step needed</span>
+      </div>
+      <div class="stat-item" data-anim="fadeInUp" data-anim-delay="80">
+        <span class="stat-number">30+</span>
+        <span class="stat-label">ready-to-use animations</span>
+      </div>
+      <div class="stat-item" data-anim="fadeInUp" data-anim-delay="160">
+        <span class="stat-number">Zero</span>
+        <span class="stat-label">dependencies — pure vanilla JS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  LIVE DEMOS                          ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<section class="padded demo-section" id="demo">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Live demos</div>
+      <h2 class="section-title">See it in action</h2>
+      <p class="section-sub">Scroll down — each card uses a real <code style="font-family:'Fira Code',monospace;font-size:.9em;color:var(--mono-red);background:#FEF0EB;padding:2px 6px;border-radius:3px;">data-anim</code> attribute. No extra JavaScript.</p>
+    </div>
+
+    <div class="demo-grid">
+
+      <!-- fadeInUp -->
+      <div class="demo-card" id="demo-fadeinup">
+        <div class="demo-anim-area">
+          <div data-anim="fadeInUp"
+               data-anim-delay="200"
+               data-anim-trigger="scroll"
+               style="background:#fff;border:1px solid var(--rule);border-radius:6px;padding:14px 18px;width:180px;">
+            <div style="font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:0.85rem;color:var(--charcoal);margin-bottom:5px;">Welcome to Dextora</div>
+            <div style="width:100%;height:8px;background:#EBEBEB;border-radius:2px;"></div>
+            <div style="width:70%;height:8px;background:#EBEBEB;border-radius:2px;margin-top:5px;"></div>
+          </div>
+        </div>
+        <div class="demo-card-footer">
+          <span class="demo-anim-name">data-anim="fadeInUp"</span>
+          <span class="demo-anim-desc">Rises from below on scroll</span>
+        </div>
+      </div>
+
+      <!-- fadeInLeft -->
+      <div class="demo-card" id="demo-fadeinleft">
+        <div class="demo-anim-area">
+          <div data-anim="fadeInLeft"
+               data-anim-delay="200"
+               data-anim-trigger="scroll"
+               style="display:inline-flex;align-items:center;gap:6px;background:#FEF0EB;border:1px solid #F9C9B6;border-radius:99px;padding:6px 14px;">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;"></span>
+            <span style="font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:600;color:var(--red);">New Release</span>
+          </div>
+        </div>
+        <div class="demo-card-footer">
+          <span class="demo-anim-name">data-anim="fadeInLeft"</span>
+          <span class="demo-anim-desc">Slides in from the left</span>
+        </div>
+      </div>
+
+      <!-- zoomIn -->
+      <div class="demo-card" id="demo-zoomin">
+        <div class="demo-anim-area">
+          <div data-anim="zoomIn"
+               data-anim-delay="200"
+               data-anim-trigger="scroll"
+               style="text-align:center;">
+            <div style="font-family:'Instrument Sans',sans-serif;font-size:2.6rem;font-weight:700;color:var(--charcoal);letter-spacing:-0.04em;line-height:1;">98%</div>
+            <div style="font-family:'Inter',sans-serif;font-size:0.75rem;color:var(--muted);margin-top:4px;">satisfaction</div>
+          </div>
+        </div>
+        <div class="demo-card-footer">
+          <span class="demo-anim-name">data-anim="zoomIn"</span>
+          <span class="demo-anim-desc">Scales up from zero</span>
+        </div>
+      </div>
+
+      <!-- flipX -->
+      <div class="demo-card" id="demo-flipx">
+        <div class="demo-anim-area">
+          <div data-anim="flipX"
+               data-anim-delay="200"
+               data-anim-trigger="scroll"
+               style="display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:500;padding:9px 18px;border-radius:4px;border:1.5px solid var(--red);">
+            Get Started
+          </div>
+        </div>
+        <div class="demo-card-footer">
+          <span class="demo-anim-name">data-anim="flipX"</span>
+          <span class="demo-anim-desc">3D horizontal flip</span>
+        </div>
+      </div>
+
+      <!-- bounceIn -->
+      <div class="demo-card" id="demo-bouncein">
+        <div class="demo-anim-area">
+          <div data-anim="bounceIn"
+               data-anim-delay="200"
+               data-anim-trigger="scroll"
+               style="display:inline-flex;align-items:center;gap:8px;">
+            <span style="width:9px;height:9px;border-radius:50%;background:#28C840;flex-shrink:0;"></span>
+            <span style="font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:500;color:var(--charcoal);">Animation complete ✓</span>
+          </div>
+        </div>
+        <div class="demo-card-footer">
+          <span class="demo-anim-name">data-anim="bounceIn"</span>
+          <span class="demo-anim-desc">Spring physics entrance</span>
+        </div>
+      </div>
+
+      <!-- slideInRight -->
+      <div class="demo-card" id="demo-slideinright">
+        <div class="demo-anim-area">
+          <div data-anim="slideInRight"
+               data-anim-delay="200"
+               data-anim-trigger="scroll"
+               style="width:160px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-family:'Inter',sans-serif;font-size:0.72rem;color:var(--muted);">Progress</span>
+              <span style="font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;color:var(--charcoal);">70%</span>
+            </div>
+            <div style="width:100%;height:5px;background:#EBEBEB;border-radius:99px;overflow:hidden;">
+              <div style="width:70%;height:100%;background:var(--red);border-radius:99px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-card-footer">
+          <span class="demo-anim-name">data-anim="slideInRight"</span>
+          <span class="demo-anim-desc">Sweeps in from the right</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  HOW IT WORKS                        ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<section class="padded how-section" id="how">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">How it works</div>
+      <h2 class="section-title">Three steps. That's it.</h2>
+    </div>
+
+    <div class="steps-grid">
+
+      <div class="step" data-anim="fadeInUp" data-anim-delay="0" id="step-1">
+        <div class="step-number">01</div>
+        <h3 class="step-title">Add the script</h3>
+        <p class="step-desc">Drop one script tag anywhere on your page. No npm install, no bundler, no configuration.</p>
+        <span class="step-code">&lt;script src="unpkg…"&gt;</span>
+      </div>
+
+      <div class="step" data-anim="fadeInUp" data-anim-delay="100" id="step-2">
+        <div class="step-number">02</div>
+        <h3 class="step-title">Write the attribute</h3>
+        <p class="step-desc">Add <code style="font-family:'Fira Code',monospace;font-size:.85em;">data-anim="fadeInUp"</code> to any HTML element. Chain delay and duration as needed.</p>
+        <span class="step-code">data-anim="zoomIn"</span>
+      </div>
+
+      <div class="step" data-anim="fadeInUp" data-anim-delay="200" id="step-3">
+        <div class="step-number">03</div>
+        <h3 class="step-title">Watch it animate</h3>
+        <p class="step-desc">dextora-anim uses <code style="font-family:'Fira Code',monospace;font-size:.85em;">IntersectionObserver</code> to trigger animations as elements scroll into view.</p>
+        <span class="step-code">scroll → animate</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  INSTALL STRIP                       ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<section class="install-strip" id="install">
+  <div class="container">
+    <div class="install-inner">
+      <div class="install-copy">
+        <h2>Start in seconds.</h2>
+        <p style="margin-bottom:20px;">One CDN link. No build step. No npm. Works in any HTML file — static sites, CMS templates, legacy apps.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://github.com/Dityasaran/dextora-dextora-anim" target="_blank" class="btn btn-fill" id="install-gh">
+            View on GitHub
+          </a>
+          <a href="https://www.npmjs.com/package/data-anim" target="_blank" class="btn btn-ghost" id="install-npm" style="color:#888;border-color:#333;">
+            npm install data-anim
+          </a>
+        </div>
+      </div>
+
+      <div class="install-code-block" id="install-code">
+        <div class="install-code-bar">
+          <span>HTML</span>
+          <button class="copy-btn-dark" onclick="copyInstall()" id="copy-install-btn">copy</button>
+        </div>
+        <pre><span class="i-comment">&lt;!-- CDN --&gt;</span>
+<span class="i-tag">&lt;script</span>
+  <span class="i-attr">src</span>=<span class="i-val">"https://unpkg.com/data-anim/dist/data-anim.min.js"</span>
+<span class="i-tag">&gt;&lt;/script&gt;</span>
+
+<span class="i-comment">&lt;!-- Animate anything --&gt;</span>
+<span class="i-tag">&lt;h1</span> <span class="i-attr">data-anim</span>=<span class="i-val">"fadeInUp"</span><span class="i-tag">&gt;</span>Hello<span class="i-tag">&lt;/h1&gt;</span>
+<span class="i-tag">&lt;p</span>  <span class="i-attr">data-anim</span>=<span class="i-val">"fadeInUp"</span>
+    <span class="i-attr">data-anim-delay</span>=<span class="i-val">"150"</span><span class="i-tag">&gt;</span>Staggered<span class="i-tag">&lt;/p&gt;</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║  FOOTER                              ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-logo">Dextora</span>
+      <span class="footer-center">
+        Built on top of <a href="https://github.com/ryo-manba/data-anim" target="_blank">data-anim</a> open source
+      </span>
+      <span class="footer-right">© 2025 Dextora. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+  function copyHero() {
+    navigator.clipboard.writeText('<script src="https://unpkg.com/data-anim/dist/data-anim.min.js"><\/script>\n<h1 data-anim="fadeInUp">Hello Dextora</h1>');
+    showToast();
+  }
+
+  function copyInstall() {
+    navigator.clipboard.writeText('<script src="https://unpkg.com/data-anim/dist/data-anim.min.js"><\/script>\n<h1 data-anim="fadeInUp">Hello</h1>\n<p data-anim="fadeInUp" data-anim-delay="150">Staggered</p>');
+    showToast();
+  }
+
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+</script>
+
+</body>
+</html>

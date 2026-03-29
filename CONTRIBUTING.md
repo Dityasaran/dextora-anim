@@ -8,8 +8,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/ryo-manba/data-anim.git
-cd data-anim
+git clone https://github.com/Dityasaran/dextora-dextora-anim.git
+cd dextora-dextora-anim
 pnpm install
 ```
 

@@ -1,21 +1,21 @@
 {
-  "name": "data-anim",
+  "name": "dextora-anim",
   "version": "1.1.0",
-  "description": "Animate with just HTML. Powered by data attributes.",
+  "description": "Animate with just HTML — a Dextora open source tool.",
   "type": "module",
   "packageManager": "pnpm@10.11.0",
-  "main": "dist/data-anim.js",
-  "module": "dist/data-anim.esm.js",
+  "main": "dist/dextora-anim.js",
+  "module": "dist/dextora-anim.esm.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/data-anim.esm.js",
-      "require": "./dist/data-anim.js"
+      "import": "./dist/dextora-anim.esm.js",
+      "require": "./dist/dextora-anim.js"
     }
   },
-  "unpkg": "dist/data-anim.min.js",
-  "jsdelivr": "dist/data-anim.min.js",
+  "unpkg": "dist/dextora-anim.min.js",
+  "jsdelivr": "dist/dextora-anim.min.js",
   "files": [
     "dist"
   ],
@@ -44,12 +44,12 @@
     "hover",
     "stagger"
   ],
-  "author": "ryo-manba",
-  "funding": "https://github.com/ryo-manba/data-anim?sponsor=1",
-  "homepage": "https://ryo-manba.github.io/data-anim/",
+  "author": "Dextora",
+  "funding": "https://github.com/Dityasaran/dextora-dextora-anim?sponsor=1",
+  "homepage": "https://dityasaran.github.io/dextora-dextora-anim/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ryo-manba/data-anim"
+    "url": "https://github.com/Dityasaran/dextora-dextora-anim"
   },
   "engines": {
     "node": ">=24"
